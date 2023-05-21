@@ -20,6 +20,11 @@ import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 import { NodeEnvs } from '@src/constants/misc';
 import { RouteError } from '@src/other/classes';
 
+import { getRooms, createRoom, updateRoom, deleteRoom } from './controllers/rooms.controller';
+import { getBookings, createBooking, updateBooking, deleteBooking } from './controllers/bookings.controller';
+import { getUsers, createUser, updateUser, deleteUser } from './controllers/users.controller';
+import { getContacts, createContact, updateContact, deleteContact } from './controllers/contact.controller';
+
 
 // **** Variables **** //
 
@@ -77,13 +82,35 @@ app.use(express.static(staticDir));
 
 // Nav to users pg by default
 app.get('/', (_: Request, res: Response) => {
-  return res.redirect('/users');
+  return res.redirect('/users-default');
 });
 
 // Redirect to login if not logged in.
-app.get('/users', (_: Request, res: Response) => {
+app.get('/users-default', (_: Request, res: Response) => {
   return res.sendFile('users.html', { root: viewsDir });
 });
+
+// Hotel Miranda Routes
+
+app.get('/rooms', getRooms);
+app.post('/rooms', createRoom);
+app.put('/rooms', updateRoom);
+app.delete('/rooms', deleteRoom);
+
+app.get('/bookings', getBookings);
+app.post('/bookings', createBooking);
+app.put('/bookings', updateBooking);
+app.delete('/bookings', deleteBooking);
+
+app.get('/users', getUsers);
+app.post('/users', createUser);
+app.put('/users', updateUser);
+app.delete('/users', deleteUser);
+
+app.get('/contact', getContacts);
+app.post('/contact', createContact);
+app.put('/contact', updateContact);
+app.delete('/contact', deleteContact);
 
 
 // **** Export default **** //
