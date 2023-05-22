@@ -11,7 +11,7 @@ export function getUserById(req: Request, res: Response) {
 }
 
 export function createUser(req: Request, res: Response) {
-  return res.json(201);
+  return res.sendStatus(201);
 }
 
 export function updateUserById(req: Request, res: Response) {
