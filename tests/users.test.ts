@@ -1,4 +1,4 @@
-import app from '../src/server';
+import app, { server } from '../src/server';
 import supertest from 'supertest';
 
 import Users from '../src/data/users.json';
@@ -22,3 +22,8 @@ describe('User Routes', () => {
     expect(res.statusCode).toBe(201);
   });
 });
+
+
+afterAll(() => {
+  server.close();
+})
