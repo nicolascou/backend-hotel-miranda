@@ -10,14 +10,14 @@ export function getUserById(req: Request, res: Response) {
   return res.json(requestedUser);
 }
 
-export function createUser(_: Request, res: Response) {
-  return res.sendStatus(201);
+export function createUser(req: Request, res: Response) {
+  return res.json(201);
 }
 
-export function updateUserById(_: Request, res: Response) {
+export function updateUserById(req: Request, res: Response) {
   return res.sendStatus(200);
 }
 
-export function deleteUserById(_: Request, res: Response) {
+export function deleteUserById(req: Request, res: Response) {
   return res.sendStatus(200);
 }
