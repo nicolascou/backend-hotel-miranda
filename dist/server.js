@@ -1,0 +1,38 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const rooms_1 = require("./controllers/rooms");
+const bookings_1 = require("./controllers/bookings");
+const users_1 = require("./controllers/users");
+const contact_1 = require("./controllers/contact");
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.get('/', (req, res) => {
+    return res.send('Hola');
+});
+app.get('/rooms', rooms_1.getRooms);
+app.get('/rooms/:id', rooms_1.getRoomById);
+app.post('/rooms', rooms_1.createRoom);
+app.put('/rooms/:id', rooms_1.updateRoomById);
+app.delete('/rooms/:id', rooms_1.deleteRoomById);
+app.get('/bookings', bookings_1.getBookings);
+app.get('/bookings/:id', bookings_1.getBookingById);
+app.post('/bookings', bookings_1.createBooking);
+app.put('/bookings/:id', bookings_1.updateBookingById);
+app.delete('/bookings/:id', bookings_1.deleteBookingById);
+app.get('/users', users_1.getUsers);
+app.get('/users/:id', users_1.getUserById);
+app.post('/users', users_1.createUser);
+app.put('/users/:id', users_1.updateUserById);
+app.delete('/users/:id', users_1.deleteUserById);
+app.get('/contact', contact_1.getContacts);
+app.get('/contact/:id', contact_1.getContactById);
+app.post('/contact', contact_1.createContact);
+app.put('/contact/:id', contact_1.updateContactById);
+app.delete('/contact/:id', contact_1.deleteContactById);
+const port = 3000;
+app.listen(port, () => console.log(`Running on port ${port}`));
