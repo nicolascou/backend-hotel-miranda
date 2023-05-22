@@ -39,3 +39,5 @@ app.delete('/contact/:id', deleteContactById);
 
 const port = 3000;
 app.listen(port, () => console.log(`Running on port ${port}`));
+
+export default app;
