@@ -1,7 +1,6 @@
 import app, { server } from '../src/server';
 import supertest from 'supertest';
-
-import Users from '../src/data/users.json';
+import Users from '../src/services/data/users.json';
 
 
 describe('User Routes', () => {
