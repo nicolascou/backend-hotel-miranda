@@ -11,4 +11,8 @@ UserRouter.get('/:id', (req, res) => {
   return res.send(users.getOne(Number(req.params.id)));
 })
 
+UserRouter.post('/', (req, res) => {
+  return res.json(users.create(req.body));
+});
+
 export default UserRouter;

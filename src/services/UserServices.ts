@@ -1,5 +1,13 @@
 import usersData from './data/users.json';
+import { IUser } from '../types';
 
-export const getAll = () => usersData;
+const users = usersData as IUser[];
 
-export const getOne = (id: number) => usersData.find(user => user.id === id);
+export const getAll = () => users;
+
+export const getOne = (id: number) => users.find(user => user.id === id);
+
+export const create = (newUser: IUser) => {
+  users.push(newUser);
+  return newUser;
+}
