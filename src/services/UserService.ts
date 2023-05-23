@@ -13,11 +13,23 @@ const create = (newUser: IUser) => {
 }
 
 const update = (updatedUser: IUser) => {
+  for (const [idx, user] of users.entries()) {
+    if (user.id === updatedUser.id) {
+      users[idx] = updatedUser;
+      break;
+    }
+  }
   return updatedUser;
 }
 
 const _delete = (id: number) => {
-  return 'Deleted';
+  for (const [idx, user] of users.entries()) {
+    if (user.id === id) {
+      users.splice(idx, 1);
+      break;
+    }
+  }
+  return 'User Deleted';
 }
 
 export default { getAll, getOne, create, update, delete: _delete }
