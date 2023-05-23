@@ -1,18 +1,17 @@
 import { Router } from "express";
-import * as users from '../services/UserServices';
+import * as users from '../services/UserService';
+import { getUsers, getUserById, createUser, updateUser, deleteUser } from "../controllers/user.controller";
 
 const UserRouter = Router();
 
-UserRouter.get('/', (_, res) => {
-  return res.send(users.getAll());
-})
+UserRouter.get('/', getUsers);
 
-UserRouter.get('/:id', (req, res) => {
-  return res.send(users.getOne(Number(req.params.id)));
-})
+UserRouter.get('/:id', getUserById);
 
-UserRouter.post('/', (req, res) => {
-  return res.json(users.create(req.body));
-});
+UserRouter.post('/', createUser);
+
+UserRouter.put('/:id', updateUser);
+
+UserRouter.delete('/:id', deleteUser);
 
 export default UserRouter;
