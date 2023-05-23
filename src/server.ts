@@ -3,15 +3,16 @@ import cors from 'cors';
 
 import { getRooms, getRoomById, createRoom, updateRoomById, deleteRoomById } from './controllers/rooms';
 import { getBookings, getBookingById, createBooking, updateBookingById, deleteBookingById } from './controllers/bookings';
-import { getUsers, getUserById, createUser, updateUserById, deleteUserById } from './controllers/users';
 import { getContacts, getContactById, createContact, updateContactById, deleteContactById } from './controllers/contact';
+import UserRouter from './routes/UserRoutes';
 
 const app = express();
+const PORT = 3000;
+
+app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  return res.send('Hola');
-})
+app.use('/users', UserRouter);
 
 app.get('/rooms', getRooms);
 app.get('/rooms/:id', getRoomById);
@@ -25,18 +26,11 @@ app.post('/bookings', createBooking);
 app.put('/bookings/:id', updateBookingById);
 app.delete('/bookings/:id', deleteBookingById);
 
-app.get('/users', getUsers);
-app.get('/users/:id', getUserById);
-app.post('/users', createUser);
-app.put('/users/:id', updateUserById);
-app.delete('/users/:id', deleteUserById);
-
 app.get('/contact', getContacts);
 app.get('/contact/:id', getContactById);
 app.post('/contact', createContact);
 app.put('/contact/:id', updateContactById);
 app.delete('/contact/:id', deleteContactById);
 
-const port = 3000;
-export const server = app.listen(port, () => console.log(`Running on port ${port}`));
+export const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 export default app;
