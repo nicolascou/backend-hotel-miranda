@@ -1,8 +1,14 @@
 import usersJson from './databases/users.json';
 import { IUser } from '../models/types';
 import { BadRequest } from '../models/error';
+import fs from 'fs';
 
 const users = usersJson as IUser[];
+
+const saveJson = () => {
+  const jsonData = JSON.stringify(users, null, 2);
+  fs.writeFileSync((__dirname + '/databases/users.json'), jsonData);
+}
 
 const getAll = () => users;
 
@@ -16,6 +22,7 @@ const getOne = (id: number) => {
 
 const create = (newUser: IUser) => {
   users.push(newUser)
+  saveJson();
   return newUser;
 }
 

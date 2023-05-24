@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import users from '../repositories/users';
-import { BadRequest } from '../models/error';
 
 export const getUsers = (_: Request, res: Response) => {
   try {
-    return res.json(users.getAll());
+    return res.send(users.getAll());
   } catch (err: any) {
     return res.sendStatus(500);
   }
@@ -12,7 +11,7 @@ export const getUsers = (_: Request, res: Response) => {
 
 export const getUserById = (req: Request, res: Response) => {
   try {
-    return res.json(users.getOne(Number(req.params.id)));
+    return res.send(users.getOne(Number(req.params.id)));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
@@ -20,9 +19,9 @@ export const getUserById = (req: Request, res: Response) => {
 
 export const createUser = (req: Request, res: Response) => {
   try {
-    res.json(users.create(req.body));
+    return res.send(users.create(req.body));
   } catch (err: any) {
-    res.status(err.status).send(err.message);
+    return res.status(err.status ?? 500).send(err.message);
   }
 }
 
