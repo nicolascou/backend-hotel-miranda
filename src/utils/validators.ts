@@ -1,8 +1,14 @@
 import { IUser } from "../types";
 
+class BadRequest extends Error {
+  constructor (public message: string, public status: number) {
+    super(message);
+  }
+}
+
 const stringValidation = (s: string) => {
   if (typeof s !== 'string' || s.length <= 1) {
-    throw new Error('Incorrect or missing Full Name');
+    throw new BadRequest('Incorrect or missing Full Name', 400);
   }
   return s;
 }
