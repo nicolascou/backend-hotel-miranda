@@ -1,7 +1,7 @@
-import usersData from './data/users.json';
+import usersJson from './databases/users.json';
 import { IUser } from '../types';
 
-const users = usersData as IUser[];
+const users = usersJson as IUser[];
 
 const getAll = () => users;
 

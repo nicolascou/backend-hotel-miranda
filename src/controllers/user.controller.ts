@@ -5,7 +5,7 @@ export const getUsers = (_: Request, res: Response) => {
   try {
     return res.json(users.getAll());
   } catch (err: any) {
-    return res.status(err.status).send(err.message);
+    return res.sendStatus(500);
   }
 }
 
