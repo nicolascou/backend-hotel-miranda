@@ -1,30 +1,45 @@
 import { Request, Response } from 'express';
-import UserService from '../services/UserService';
-import { validateUser } from '../utils/validators';
+import users from '../repositories/users';
+import { IUser, INewUser } from '../models/types';
 
-export const getUsers = (_: Request, res: Response) =>
-  res.json(UserService.getAll());
-
-export const getUserById = (req: Request, res: Response) =>
-  res.json(UserService.getOne(Number(req.params.id)));
-
-export const createUser = (req: Request, res: Response) => {
+const getUsers = (_: Request, res: Response) => {
   try {
-    validateUser(req.body);
-    res.json(UserService.create(req.body));
+    return res.send(users.getAll());
   } catch (err: any) {
-    res.status(400).send(err.message)
-  } 
+    return res.sendStatus(500);
+  }
 }
 
-export const updateUser = (req: Request, res: Response) => {
+const getUserById = (req: Request<{ id: number }, IUser>, res: Response) => {
   try {
-    validateUser(req.body);
-    res.json(UserService.update(req.body));
+    return res.send(users.getOne(Number(req.params.id)));
   } catch (err: any) {
-    res.status(400).send(err.message)
-  } 
+    return res.status(err.status ?? 500).send(err.message);
+  }
 }
 
-export const deleteUser = (req: Request, res: Response) =>
-  res.json(UserService.delete(Number(req.params.id)));
+const createUser = async (req: Request<{}, IUser, INewUser>, res: Response) => {
+  try {
+    return res.send(await users.create(req.body));
+  } catch (err: any) {
+    return res.status(err.status ?? 500).send(err.message);
+  }
+}
+
+const updateUser = async (req: Request<{ id: number }, IUser, INewUser>, res: Response) => {
+  try {
+    return res.send(await users.update({ id: Number(req.params.id), ...req.body }));
+  } catch (err: any) {
+    return res.status(err.status ?? 500).send(err.message);
+  }
+}
+
+const deleteUser = async (req: Request<{ id: number }, string>, res: Response) => {
+  try {
+    return res.send(await users.delete(Number(req.params.id)));
+  } catch (err: any) {
+    return res.status(err.status ?? 500).send(err.message);
+  }
+}
+
+export { getUsers, getUserById, createUser, updateUser, deleteUser }
