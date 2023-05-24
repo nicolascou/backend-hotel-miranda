@@ -1,11 +1,18 @@
 import usersJson from './databases/users.json';
-import { IUser } from '../types';
+import { IUser } from '../models/types';
+import { BadRequest } from '../models/error';
 
 const users = usersJson as IUser[];
 
 const getAll = () => users;
 
-const getOne = (id: number) => users.find(user => user.id === id);
+const getOne = (id: number) => {
+  const user = users.find(user => user.id === id);
+  if (!user) {
+    throw new BadRequest('No user found', 404);
+  }
+  return user;
+}
 
 const create = (newUser: IUser) => {
   users.push(newUser)

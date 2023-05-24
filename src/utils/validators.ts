@@ -1,10 +1,5 @@
-import { IUser } from "../types";
-
-class BadRequest extends Error {
-  constructor (public message: string, public status: number) {
-    super(message);
-  }
-}
+import { IUser } from "../models/types";
+import { BadRequest } from "../models/error";
 
 const stringValidation = (s: string) => {
   if (typeof s !== 'string' || s.length <= 1) {

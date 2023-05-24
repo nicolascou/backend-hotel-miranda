@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import users from '../repositories/users';
+import { BadRequest } from '../models/error';
 
 export const getUsers = (_: Request, res: Response) => {
   try {
@@ -9,8 +10,13 @@ export const getUsers = (_: Request, res: Response) => {
   }
 }
 
-export const getUserById = (req: Request, res: Response) =>
-  res.json(users.getOne(Number(req.params.id)));
+export const getUserById = (req: Request, res: Response) => {
+  try {
+    return res.json(users.getOne(Number(req.params.id)));
+  } catch (err: any) {
+    return res.status(err.status ?? 500).send(err.message);
+  }
+}
 
 export const createUser = (req: Request, res: Response) => {
   try {
