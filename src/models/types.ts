@@ -12,6 +12,18 @@ export interface IUser {
   password: string | undefined;
 }
 
+export interface INewUser {
+  full_name: string | undefined;
+  username: string | undefined;
+  photo: string | undefined;
+  phone?: string | undefined;
+  position: string | undefined;
+  description: string | undefined;
+  email: string | undefined;
+  state: string | undefined;
+  password: string | undefined;
+}
+
 export interface IBooking {
   id: number;
   guest: string | undefined;
