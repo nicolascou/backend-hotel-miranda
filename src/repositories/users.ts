@@ -6,7 +6,7 @@ import moment from 'moment';
 
 const users = usersJson as IUser[];
 
-const saveJson = () => {
+async function saveJson() {
   const jsonData = JSON.stringify(users, null, 2);
   fs.writeFileSync((__dirname + '/databases/users.json'), jsonData);
 }
@@ -21,39 +21,40 @@ const getOne = (id: number) => {
   return user;
 }
 
-const create = (newUserInfo: INewUser) => {
+const create = async (newUserInfo: INewUser) => {
   const newUser: IUser = {
     id: users[users.length-1].id + 1,
     ...newUserInfo,
     start_date: moment().format('YYYY-MM-DD')
   }
   users.push(newUser);
-  saveJson();
+  await saveJson();
   return newUser;
 }
 
-const update = (updatedUser: Omit<IUser, 'start_date'>) => {
+const update = async (updatedUser: Omit<IUser, 'start_date'>) => {
   for (let [idx, user] of users.entries()) {
     if (user.id === updatedUser.id) {
       users[idx] = {
         ...updatedUser,
         start_date: user.start_date
       }
-      saveJson();
+      await saveJson();
       return users[idx];
     }
   }
   throw new BadRequest('No user found by provided ID', 404);
 }
 
-const _delete = (id: number) => {
+const _delete = async (id: number) => {
   for (const [idx, user] of users.entries()) {
     if (user.id === id) {
       users.splice(idx, 1);
-      break;
+      await saveJson();
+      return 'User Deleted';
     }
   }
-  return 'User Deleted';
+  throw new BadRequest('No user found by provided ID', 404);
 }
 
 export default { getAll, getOne, create, update, delete: _delete }
