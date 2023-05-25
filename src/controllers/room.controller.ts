@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import rooms from '../repositories/rooms';
 import { IRoom, INewRoom } from '../models/types';
-import { toNewRoom } from '../utils/roomValidator';
+import toNewRoom from '../utils/toNewRoom';
 
 const getRooms = (_: Request, res: Response) => {
   try {

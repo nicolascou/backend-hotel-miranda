@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import users from '../repositories/users';
 import { IUser, INewUser } from '../models/types';
-import { toNewUser } from '../utils/userValidator';
+import toNewUser from '../utils/toNewUser';
 
 const getUsers = (_: Request, res: Response) => {
   try {
