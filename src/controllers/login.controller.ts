@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, Router } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
@@ -6,6 +6,8 @@ interface UserToken {
   _id: string;
   email: string;
 }
+
+const loginRouter = Router()
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
 	passport.authenticate(
@@ -37,4 +39,6 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 	)(req, res, next);
 };
 
-export default login;
+loginRouter.post('/', login);
+
+export default loginRouter;

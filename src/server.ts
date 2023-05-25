@@ -5,7 +5,8 @@ import UserRouter from './routes/UserRoutes';
 import BookingRouter from './routes/BookingRoutes';
 import RoomRouter from './routes/RoomRoutes';
 import ContactRouter from './routes/ContactRoutes';
-import loginController from './controllers/login.controller';
+import loginRouter from './controllers/login.controller';
+
 import passport from 'passport';
 import './services/auth';
 
@@ -15,12 +16,11 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
-app.post('/login', loginController)
+app.use('/login', loginRouter)
 app.use('/users', passport.authenticate('jwt', { session: false }), UserRouter);
-// app.use('/users', UserRouter);
-app.use('/bookings', BookingRouter);
-app.use('/rooms', RoomRouter);
-app.use('/contact', ContactRouter);
+app.use('/bookings', passport.authenticate('jwt', { session: false }), BookingRouter);
+app.use('/rooms', passport.authenticate('jwt', { session: false }), RoomRouter);
+app.use('/contact', passport.authenticate('jwt', { session: false }), ContactRouter);
 
 export const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 export default app;
