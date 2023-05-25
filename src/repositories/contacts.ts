@@ -1,16 +1,13 @@
-import contactsJson from './databases/contact.json';
 import { IContact } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import moment from 'moment';
 
-const contacts = contactsJson as IContact[];
+const contacts: IContact[] = JSON.parse(fs.readFileSync(__dirname + '/databases/contact.json').toString());
 
 function saveJson() {
   const jsonData = JSON.stringify(contacts, null, 2);
-  fs.writeFile((__dirname + '/databases/contact.json'), jsonData, 'utf-8', (err) => {
-    console.error(err);
-  });
+  fs.writeFileSync(__dirname + '/databases/contact.json', jsonData);
 }
 
 const getAll = () => contacts;

@@ -37,8 +37,29 @@ export interface IBooking {
   status: 'Check In' | 'In Progress' | 'Check Out';
 }
 
+export interface INewBooking {
+  guest: string | undefined;
+  photo: string | undefined;
+  check_in: string;
+  check_out: string;
+  room_type: string | undefined;
+  special_request: string | undefined;
+  status: 'Check In' | 'In Progress' | 'Check Out';
+}
+
 export interface IRoom {
   id: number;
+  name: string | undefined;
+  bed_type: string | undefined;
+  photo: string | undefined;
+  description?: string | undefined;
+  amenities: string[];
+  rate: number;
+  offer: number;
+  status: string;
+}
+
+export interface INewRoom {
   name: string | undefined;
   bed_type: string | undefined;
   photo: string | undefined;
@@ -52,6 +73,15 @@ export interface IRoom {
 export interface IContact {
   id: string;
   date: string;
+  name: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
+  subject: string | undefined;
+  comment: string | undefined;
+  archived: boolean;
+}
+
+export interface INewContact {
   name: string | undefined;
   email: string | undefined;
   phone: string | undefined;
