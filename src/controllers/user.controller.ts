@@ -18,25 +18,25 @@ const getUserById = (req: Request<{ id: number }, IUser>, res: Response) => {
   }
 }
 
-const createUser = async (req: Request<{}, IUser, INewUser>, res: Response) => {
+const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
   try {
-    return res.send(await users.create(req.body));
+    return res.status(200).send(users.create(req.body));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const updateUser = async (req: Request<{ id: number }, IUser, INewUser>, res: Response) => {
+const updateUser = (req: Request<{ id: number }, IUser, INewUser>, res: Response) => {
   try {
-    return res.send(await users.update({ id: Number(req.params.id), ...req.body }));
+    return res.send(users.update({ id: Number(req.params.id), ...req.body }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const deleteUser = async (req: Request<{ id: number }, string>, res: Response) => {
+const deleteUser = (req: Request<{ id: number }, string>, res: Response) => {
   try {
-    return res.send(await users.delete(Number(req.params.id)));
+    return res.send(users.delete(Number(req.params.id)));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

@@ -1,16 +1,16 @@
 import { Router } from "express";
-// import { getContacts, getContactById, createContact, updateContact, deleteContact } from "../controllers/contact.controller";
+import { getContacts, getContactById, createContact, updateContact, deleteContact } from "../controllers/contact.controller";
 
 const ContactRouter = Router();
 
-// ContactRouter.get('/', getContacts);
+ContactRouter.get('/', getContacts);
 
-// ContactRouter.get('/:id', getContactById);
+ContactRouter.get('/:id', getContactById);
 
-// ContactRouter.post('/', createContact);
+ContactRouter.post('/', createContact);
 
-// ContactRouter.put('/:id', updateContact);
+ContactRouter.put('/:id', updateContact);
 
-// ContactRouter.delete('/:id', deleteContact);
+ContactRouter.delete('/:id', deleteContact);
 
 export default ContactRouter;
