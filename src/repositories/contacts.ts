@@ -8,9 +8,8 @@ const contacts = contactsJson as IContact[];
 
 function saveJson() {
   const jsonData = JSON.stringify(contacts, null, 2);
-  fs.writeFile((__dirname + '/databases/contact.json'), jsonData, 'utf-8', (err) => {
-    console.error(err);
-  });
+  fs.unlinkSync(__dirname + '/databases/contact.json');
+  fs.writeFileSync(__dirname + '/databases/contact.json', jsonData);
 }
 
 const getAll = () => contacts;

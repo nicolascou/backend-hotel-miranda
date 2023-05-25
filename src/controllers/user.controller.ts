@@ -10,7 +10,7 @@ const getUsers = (_: Request, res: Response) => {
   }
 }
 
-const getUserById = (req: Request<{ id: number }, IUser>, res: Response) => {
+const getUserById = (req: Request<{ id: string }, IUser>, res: Response) => {
   try {
     return res.send(users.getOne(Number(req.params.id)));
   } catch (err: any) {
@@ -26,7 +26,7 @@ const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
   }
 }
 
-const updateUser = (req: Request<{ id: number }, IUser, INewUser>, res: Response) => {
+const updateUser = (req: Request<{ id: string }, IUser, INewUser>, res: Response) => {
   try {
     return res.send(users.update({ id: Number(req.params.id), ...req.body }));
   } catch (err: any) {
@@ -34,7 +34,7 @@ const updateUser = (req: Request<{ id: number }, IUser, INewUser>, res: Response
   }
 }
 
-const deleteUser = (req: Request<{ id: number }, string>, res: Response) => {
+const deleteUser = (req: Request<{ id: string }, string>, res: Response) => {
   try {
     return res.send(users.delete(Number(req.params.id)));
   } catch (err: any) {
