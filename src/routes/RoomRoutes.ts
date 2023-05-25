@@ -1,16 +1,16 @@
 import { Router } from "express";
-// import { getRooms, getRoomById, createRoom, updateRoom, deleteRoom } from "../controllers/room.controller";
+import { getRooms, getRoomById, createRoom, updateRoom, deleteRoom } from "../controllers/room.controller";
 
 const RoomRouter = Router();
 
-// RoomRouter.get('/', getRooms);
+RoomRouter.get('/', getRooms);
 
-// RoomRouter.get('/:id', getRoomById);
+RoomRouter.get('/:id', getRoomById);
 
-// RoomRouter.post('/', createRoom);
+RoomRouter.post('/', createRoom);
 
-// RoomRouter.put('/:id', updateRoom);
+RoomRouter.put('/:id', updateRoom);
 
-// RoomRouter.delete('/:id', deleteRoom);
+RoomRouter.delete('/:id', deleteRoom);
 
 export default RoomRouter;

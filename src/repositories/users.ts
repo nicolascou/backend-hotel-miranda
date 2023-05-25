@@ -1,14 +1,12 @@
-import usersJson from './databases/users.json';
 import { INewUser, IUser } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import moment from 'moment';
 
-const users = usersJson as IUser[];
+const users: IUser[] = JSON.parse(fs.readFileSync(__dirname + '/databases/users.json').toString());
 
 function saveJson() {
   const jsonData = JSON.stringify(users, null, 2);
-  fs.unlinkSync(__dirname + '/databases/users.json');
   fs.writeFileSync(__dirname + '/databases/users.json', jsonData);
 }
 

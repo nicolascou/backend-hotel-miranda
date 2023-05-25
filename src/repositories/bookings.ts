@@ -1,14 +1,12 @@
-import bookingsJson from './databases/bookings.json';
 import { IBooking, INewBooking } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import moment from 'moment';
 
-const bookings = bookingsJson as IBooking[];
+const bookings: IBooking[] = JSON.parse(fs.readFileSync(__dirname + '/databases/bookings.json').toString());
 
 function saveJson() {
   const jsonData = JSON.stringify(bookings, null, 2);
-  fs.unlinkSync(__dirname + '/databases/bookings.json');
   fs.writeFileSync(__dirname + '/databases/bookings.json', jsonData);
 }
 
