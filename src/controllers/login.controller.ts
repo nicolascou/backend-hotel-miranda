@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 interface UserToken {
   _id: string;
@@ -27,7 +28,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
           	if (error) return next(error);
 
           	const body = { _id: user._id, email: user.email };
-          	const token = jwt.sign({ user: body }, 'cambiame');
+          	const token = jwt.sign({ user: body }, process.env.SECRET_KEY!);
 
           	return res.json({ token });
         	}
