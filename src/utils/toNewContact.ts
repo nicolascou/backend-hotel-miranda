@@ -1,5 +1,4 @@
 import { INewContact } from "../models/types";
-import { BadRequest } from "../models/error";
 import { booleanValidation, stringValidation } from "./validators";
 
 export default function toNewContact(body: any): INewContact {

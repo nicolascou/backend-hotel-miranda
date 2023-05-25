@@ -50,3 +50,10 @@ export function booleanValidation(x: boolean) {
   }
   return x;
 }
+
+export function bookingStatusValidation(status: 'Check In' | 'Check Out' | 'In Progress') {
+  if (!['Check In', 'Check Out', 'In Progress'].includes(status)) {
+    throw new BadRequest('Incorrect booking status', 400);
+  }
+  return status;
+}
