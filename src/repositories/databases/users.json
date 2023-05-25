@@ -1,14 +1,15 @@
 [
   {
     "id": 1,
-    "full_name": "Nicolás Cousillas",
-    "username": "nico1",
-    "photo": "../img/profilePic.jpg",
-    "position": "Manager",
+    "full_name": "Nicolás Cou",
     "description": "Overseeing the daily operations of the hotel, directing phone calls, coordinating travel plans",
     "email": "nicolascousillas1@gmail.com",
-    "state": "active",
     "password": "1234",
+    "photo": "../img/profilePic.jpg",
+    "position": "../img/profilePic.jpg",
+    "state": "active",
+    "username": "nico1",
+    "phone": "633344222",
     "start_date": "2022-04-01"
   },
   {

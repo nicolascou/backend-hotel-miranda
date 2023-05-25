@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import rooms from '../repositories/rooms';
 import { IRoom, INewRoom } from '../models/types';
+import toNewRoom from '../utils/toNewRoom';
 
 const getRooms = (_: Request, res: Response) => {
   try {
@@ -20,7 +21,8 @@ const getRoomById = (req: Request<{ id: string }, IRoom>, res: Response) => {
 
 const createRoom = (req: Request<{}, IRoom, INewRoom>, res: Response) => {
   try {
-    return res.status(200).send(rooms.create(req.body));
+    const newRoom = toNewRoom(req.body);
+    return res.status(200).send(rooms.create(newRoom));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
@@ -28,7 +30,8 @@ const createRoom = (req: Request<{}, IRoom, INewRoom>, res: Response) => {
 
 const updateRoom = (req: Request<{ id: string }, IRoom, INewRoom>, res: Response) => {
   try {
-    return res.send(rooms.update({ id: Number(req.params.id), ...req.body }));
+    const validateRoom = toNewRoom(req.body);
+    return res.send(rooms.update({ id: Number(req.params.id), ...validateRoom }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

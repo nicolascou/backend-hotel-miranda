@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import contacts from '../repositories/contacts';
-import { IContact } from '../models/types';
+import { IContact, INewContact } from '../models/types';
+import toNewContact from '../utils/toNewContact';
 
 const getContacts = (_: Request, res: Response) => {
   try {
@@ -18,17 +19,19 @@ const getContactById = (req: Request<{ id: string }, IContact>, res: Response) =
   }
 }
 
-const createContact = (req: Request<{}, IContact, Omit<IContact, 'id'>>, res: Response) => {
+const createContact = (req: Request<{}, IContact, INewContact>, res: Response) => {
   try {
-    return res.status(200).send(contacts.create(req.body));
+    const newContact = toNewContact(req.body);
+    return res.status(200).send(contacts.create(newContact));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const updateContact = (req: Request<{ id: string }, IContact, Omit<IContact, 'id'>>, res: Response) => {
+const updateContact = (req: Request<{ id: string }, IContact, INewContact>, res: Response) => {
   try {
-    return res.send(contacts.update({ id: req.params.id, ...req.body }));
+    const validateContact = toNewContact(req.body);
+    return res.send(contacts.update({ id: req.params.id, ...validateContact }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

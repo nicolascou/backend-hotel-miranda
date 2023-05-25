@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import users from '../repositories/users';
 import { IUser, INewUser } from '../models/types';
+import toNewUser from '../utils/toNewUser';
 
 const getUsers = (_: Request, res: Response) => {
   try {
@@ -20,7 +21,8 @@ const getUserById = (req: Request<{ id: string }, IUser>, res: Response) => {
 
 const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
   try {
-    return res.status(200).send(users.create(req.body));
+    const newUser = toNewUser(req.body);
+    return res.status(200).send(users.create(newUser));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
@@ -28,7 +30,8 @@ const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
 
 const updateUser = (req: Request<{ id: string }, IUser, INewUser>, res: Response) => {
   try {
-    return res.send(users.update({ id: Number(req.params.id), ...req.body }));
+    const validateUser = toNewUser(req.body);
+    return res.send(users.update({ id: Number(req.params.id), ...validateUser }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

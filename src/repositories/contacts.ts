@@ -1,4 +1,4 @@
-import { IContact } from '../models/types';
+import { IContact, INewContact } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import moment from 'moment';
@@ -20,9 +20,9 @@ const getOne = (id: string) => {
   return contact;
 }
 
-const create = (newContactInfo: Omit<IContact, 'id'>) => {
+const create = (newContactInfo: INewContact) => {
   const newContact: IContact = {
-    id: contacts[contacts.length-1].id + 1,
+    id: (Number(contacts[contacts.length-1].id) + 1).toString(),
     ...newContactInfo,
     date: moment().format('YYYY-MM-DD')
   }
