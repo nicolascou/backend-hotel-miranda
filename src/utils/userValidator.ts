@@ -24,7 +24,7 @@ function emailValidation(email: string) {
 }
 
 function phoneValidation(phoneNumber: string) {
-  var re = /^\d{10}$/;
+  var re = /^\d{9}$/;
   if (!re.test(phoneNumber)) {
     throw new BadRequest('Incorrect or missing phone number', 400);
   }
@@ -41,6 +41,6 @@ export function toNewUser(body: any): INewUser {
     position: stringValidation(body.photo),
     state: stateValidation(body.state),
     username: stringValidation(body.username),
-    phone: phoneValidation(body.phone)
+    phone: phoneValidation(body.phone) || undefined
   }
 }
