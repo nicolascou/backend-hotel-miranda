@@ -50,7 +50,7 @@ const _delete = (id: string) => {
     if (contact.id === id) {
       contacts.splice(idx, 1);
        saveJson();
-      return 'Contact Deleted';
+      return `Contact ${id} Deleted`;
     }
   }
   throw new BadRequest('No contact found by provided ID', 404);

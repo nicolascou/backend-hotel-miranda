@@ -45,7 +45,7 @@ const _delete = (id: number) => {
     if (room.id === id) {
       rooms.splice(idx, 1);
        saveJson();
-      return 'Room Deleted';
+      return `Room ${id} Deleted`;
     }
   }
   throw new BadRequest('No room found by provided ID', 404);

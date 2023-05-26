@@ -29,6 +29,8 @@ describe('User CRUD, good requests', () => {
     expect(res.body).toEqual(Users[0]);
   });
 
+  const testId = Users[Users.length - 1].id + 1;
+
   it('should create user', async () => {
     const res = await supertest(app)
       .post('/users')
@@ -45,12 +47,12 @@ describe('User CRUD, good requests', () => {
         password: "passwordtest"
       })
       .expect(201);
-    expect(res.body.id).toEqual(Users[Users.length - 1].id + 1);
+    expect(res.body.id).toEqual(testId);
   });
 
   it('should update user', async () => {
     const res = await supertest(app)
-      .put('/users/' + (Users[Users.length - 1].id + 1).toString())
+      .put('/users/' + testId.toString())
       .auth(authToken, { type: 'bearer' })
       .send({
         full_name: "Test User Updated",
@@ -69,11 +71,21 @@ describe('User CRUD, good requests', () => {
 
   it('should delete user', async () => {
     const res = await supertest(app)
-      .delete('/users/' + (Users[Users.length - 1].id + 1).toString())
+      .delete('/users/' + testId.toString())
       .auth(authToken, { type: 'bearer' })
       .expect(200);
-    expect(res.text).toBe('User Deleted');
+    expect(res.text).toBe(`User ${testId} Deleted`);
   });
 });
 
-server.close();
+describe('User actions, bad requests', () => {
+  it('should not create user', async () => {
+    await supertest(app)
+      .post('/users')
+      .auth(authToken, { type: 'bearer' })
+      .send({})
+      .expect(400);
+  });
+});
+
+server.close()

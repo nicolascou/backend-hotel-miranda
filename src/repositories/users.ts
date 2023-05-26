@@ -31,12 +31,12 @@ const create = (newUserInfo: INewUser) => {
   return newUser;
 }
 
-const update = (updatedUser: Omit<IUser, 'start_date'>) => {
+const update = (updatedUser: Partial<IUser>) => {
   for (let [idx, user] of users.entries()) {
     if (user.id === updatedUser.id) {
       users[idx] = {
+        ...user,
         ...updatedUser,
-        start_date: user.start_date
       }
       saveJson();
       return users[idx];
@@ -50,7 +50,7 @@ const _delete = (id: number) => {
     if (user.id === id) {
       users.splice(idx, 1);
        saveJson();
-      return 'User Deleted';
+      return `User ${id} Deleted`;
     }
   }
   throw new BadRequest('No user found by provided ID', 404);
