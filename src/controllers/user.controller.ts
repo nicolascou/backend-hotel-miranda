@@ -22,7 +22,7 @@ const getUserById = (req: Request<{ id: string }, IUser>, res: Response) => {
 const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
   try {
     const newUser = toNewUser(req.body);
-    return res.status(200).send(users.create(newUser));
+    return res.status(201).send(users.create(newUser));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

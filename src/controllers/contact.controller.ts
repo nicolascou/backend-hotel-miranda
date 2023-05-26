@@ -22,7 +22,7 @@ const getContactById = (req: Request<{ id: string }, IContact>, res: Response) =
 const createContact = (req: Request<{}, IContact, INewContact>, res: Response) => {
   try {
     const newContact = toNewContact(req.body);
-    return res.status(200).send(contacts.create(newContact));
+    return res.status(201).send(contacts.create(newContact));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

@@ -25,7 +25,7 @@ const create = (newBookingInfo: INewBooking) => {
     id: bookings[bookings.length-1].id + 1,
     ...newBookingInfo,
     order_date: moment().format('YYYY-MM-DD'),
-    guest_id: '1'
+    guest_id: '#' + Math.trunc(Math.random() * 100000000)
   }
   bookings.push(newBooking);
   saveJson();
@@ -38,7 +38,7 @@ const update = (updatedBooking: INewBooking & {id: number}) => {
       bookings[idx] = {
         ...updatedBooking,
         order_date: booking.order_date,
-        guest_id: '1'
+        guest_id: booking.guest_id
       }
       saveJson();
       return bookings[idx];
@@ -52,7 +52,7 @@ const _delete = (id: number) => {
     if (booking.id === id) {
       bookings.splice(idx, 1);
        saveJson();
-      return 'Booking Deleted';
+      return `Booking ${id} Deleted`;
     }
   }
   throw new BadRequest('No booking found by provided ID', 404);

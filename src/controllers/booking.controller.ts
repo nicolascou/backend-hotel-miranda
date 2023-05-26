@@ -22,7 +22,7 @@ const getBookingById = (req: Request<{ id: string }, IBooking>, res: Response) =
 const createBooking = (req: Request<{}, IBooking, INewBooking>, res: Response) => {
   try {
     const newBooking = toNewBooking(req.body);
-    return res.status(200).send(bookings.create(newBooking));
+    return res.status(201).send(bookings.create(newBooking));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

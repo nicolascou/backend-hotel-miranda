@@ -22,7 +22,7 @@ const getRoomById = (req: Request<{ id: string }, IRoom>, res: Response) => {
 const createRoom = (req: Request<{}, IRoom, INewRoom>, res: Response) => {
   try {
     const newRoom = toNewRoom(req.body);
-    return res.status(200).send(rooms.create(newRoom));
+    return res.status(201).send(rooms.create(newRoom));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
