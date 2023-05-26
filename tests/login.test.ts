@@ -24,6 +24,4 @@ describe('Login Route', () => {
   });
 });
 
-afterAll(() => {
-  server.close();
-});
+server.close();

@@ -76,7 +76,4 @@ describe('User CRUD, good requests', () => {
   });
 });
 
-
-afterAll(() => {
-  server.close();
-});
+server.close();
