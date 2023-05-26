@@ -38,7 +38,7 @@ const update = (updatedBooking: INewBooking & {id: number}) => {
       bookings[idx] = {
         ...updatedBooking,
         order_date: booking.order_date,
-        guest_id: '1'
+        guest_id: booking.guest_id
       }
       saveJson();
       return bookings[idx];

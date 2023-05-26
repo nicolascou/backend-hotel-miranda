@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
 
 interface UserToken {
   _id: string;
