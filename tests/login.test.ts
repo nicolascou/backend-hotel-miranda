@@ -1,21 +1,29 @@
-// import app, { server } from '../src/server';
-// import supertest from 'supertest';
+import app, { server } from '../src/server';
+import supertest from 'supertest';
 
-// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjg1MDkyNTYzfQ.OJfUYRtUGIinxwwde_PdBBLw2SikvQnrGSJQKGpt-gc'
+describe('Login Route', () => {
+  it('should login and return token', async () => {
+    const res = await supertest(app)
+      .post('/login')
+      .send({
+        name: "nico",
+        password: "1234"
+      })
+      .expect(200);
+    expect(res.body.token).toBeDefined();
+  });
 
-// describe('Login Route', async () => {
-// //   it('should login and return token', async () => {
-// //     const res = await supertest(app)
-// //       .get('/login')
-// //       .send({
-// //         name: "nico",
-// //         password: "1234"
-// //       })
-// //       .expect(200);
-// //     expect(res.body).toEqual({ "token": token });
-// //   });
-// });
+  it('should not login, incorrect user', async () => {
+    await supertest(app)
+      .post('/login')
+      .send({
+        name: "nico",
+        password: "incorrect"
+      })
+      .expect(500);
+  });
+});
 
-// afterAll(() => {
-//   server.close();
-// });
+afterAll(() => {
+  server.close();
+});

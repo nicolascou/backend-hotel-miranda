@@ -4,6 +4,14 @@ import Users from '../src/repositories/databases/users.json';
 
 const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjg1MDkyNTYzfQ.OJfUYRtUGIinxwwde_PdBBLw2SikvQnrGSJQKGpt-gc';
 
+describe('User Routes', () => {
+  it('should not let access', async() => {
+    await supertest(app)
+      .get('/users')
+      .expect(401);
+  });
+});
+
 describe('User CRUD, good requests', () => {
   it('should return users json', async() => {
     const res = await supertest(app)
@@ -71,4 +79,4 @@ describe('User CRUD, good requests', () => {
 
 afterAll(() => {
   server.close();
-})
+});
