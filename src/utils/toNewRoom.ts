@@ -1,5 +1,4 @@
 import { INewRoom } from "../models/types";
-import { BadRequest } from "../models/error";
 import { amenitiesValidation, numberValidation, stringValidation } from "./validators";
 
 export default function toNewRoom(body: any): INewRoom {
