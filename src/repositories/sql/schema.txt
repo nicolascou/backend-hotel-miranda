@@ -1,4 +1,5 @@
-DROP TABLE if EXISTS `rooms`;
+DROP TABLE if EXISTS bookings, rooms, contact, users;
+
 CREATE TABLE `rooms` (
 	`id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -12,7 +13,6 @@ CREATE TABLE `rooms` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE if EXISTS `bookings`;
 CREATE TABLE `bookings` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`room_id` INT,
@@ -29,7 +29,6 @@ CREATE TABLE `bookings` (
 	ON DELETE CASCADE ON UPDATE cascade
 );
 
-DROP TABLE if EXISTS `contact`;
 CREATE TABLE `contact` (
 	`id` INT NOT NULL AUTO_INCREMENT,
   `date` DATE,
@@ -42,7 +41,6 @@ CREATE TABLE `contact` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE if EXISTS `users`;
 CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT,
   `full_name` VARCHAR(255) NOT NULL,
@@ -50,7 +48,6 @@ CREATE TABLE `users` (
   `email` VARCHAR(255),
   `password` VARCHAR(255),
   `photo` VARCHAR(255),
-  `phone` VARCHAR(255),
   `position` VARCHAR(255),
   `state` VARCHAR(255),
   `username` VARCHAR(255),

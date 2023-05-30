@@ -1,6 +1,7 @@
 import { IRoom, INewRoom } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
+import { db } from './db';
 
 const rooms: IRoom[] = JSON.parse(fs.readFileSync(__dirname + '/databases/rooms.json').toString());
 
@@ -9,7 +10,16 @@ function saveJson() {
   fs.writeFileSync(__dirname + '/databases/rooms.json', jsonData);
 }
 
-const getAll = () => rooms;
+const getAll = async (): Promise<IRoom[]> => {
+  return new Promise((resolve, reject) => {
+    db.query('SELECT * FROM rooms', function(err, results) {
+      if (err) {
+        reject(err);
+      }
+      resolve(results as IRoom[]);
+    });
+  });
+};
 
 const getOne = (id: number) => {
   const room = rooms.find(room => room.id === id);

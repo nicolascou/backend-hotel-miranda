@@ -68,7 +68,7 @@ export interface INewRoom {
   amenities: string[];
   rate: number;
   offer: number;
-  status: string;
+  available: boolean;
 }
 
 export interface IContact {

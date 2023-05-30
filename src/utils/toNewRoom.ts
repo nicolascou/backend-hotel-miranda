@@ -1,5 +1,5 @@
 import { INewRoom } from "../models/types";
-import { amenitiesValidation, numberValidation, stringValidation } from "./validators";
+import { amenitiesValidation, booleanValidation, numberValidation, stringValidation } from "./validators";
 
 export default function toNewRoom(body: any): INewRoom {
   return {
@@ -10,6 +10,6 @@ export default function toNewRoom(body: any): INewRoom {
     amenities: amenitiesValidation(body.amenities),
     rate: numberValidation(body.rate),
     offer: numberValidation(body.offer),
-    status: stringValidation(body.status)
+    available: booleanValidation(body.available)
   }
 }

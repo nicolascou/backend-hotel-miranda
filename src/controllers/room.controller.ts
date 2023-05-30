@@ -3,9 +3,9 @@ import rooms from '../repositories/rooms';
 import { IRoom, INewRoom } from '../models/types';
 import toNewRoom from '../utils/toNewRoom';
 
-const getRooms = (_: Request, res: Response) => {
+const getRooms = async (_: Request, res: Response) => {
   try {
-    return res.send(rooms.getAll());
+    return res.send(await rooms.getAll());
   } catch (err: any) {
     return res.sendStatus(500);
   }
