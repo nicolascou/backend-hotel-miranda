@@ -1,0 +1,57 @@
+DROP TABLE if EXISTS `rooms`;
+CREATE TABLE `rooms` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `bed_type` VARCHAR(255),
+  `photo` VARCHAR(255),
+  `amenities` VARCHAR(255),
+  `rate` FLOAT(10, 2),
+  `status` VARCHAR(255),
+	PRIMARY KEY (`id`)
+);
+
+DROP TABLE if EXISTS `bookings`;
+CREATE TABLE `bookings` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`room_id` INT,
+	`guest` VARCHAR(255) NOT NULL,
+	`guest_id` VARCHAR(255),
+	`photo` VARCHAR(255),
+	`order_date` DATE,
+	`check_in` DATE,
+	`check_out` DATE,
+	`room_type` VARCHAR(255),
+	`special_request` VARCHAR(255),
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`room_id`) REFERENCES rooms(`id`)
+	ON DELETE CASCADE ON UPDATE cascade
+);
+
+DROP TABLE if EXISTS `contact`;
+CREATE TABLE `contact` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+  `date` DATE,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255),
+  `phone` VARCHAR(255),
+  `subject` VARCHAR(255),
+  `comment` VARCHAR(255),
+  `archived` BOOLEAN,
+	PRIMARY KEY (`id`)
+);
+
+DROP TABLE if EXISTS `users`;
+CREATE TABLE `users` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+  `full_name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255),
+  `email` VARCHAR(255),
+  `password` VARCHAR(255),
+  `photo` VARCHAR(255),
+  `position` VARCHAR(255),
+  `state` VARCHAR(255),
+  `username` VARCHAR(255),
+  `phone` VARCHAR(255),
+  `start_date` DATE,
+	PRIMARY KEY (`id`)
+);
