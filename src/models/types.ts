@@ -72,7 +72,7 @@ export interface INewRoom {
 }
 
 export interface IContact {
-  id: string;
+  id: number;
   date: string;
   name: string | undefined;
   email: string | undefined;

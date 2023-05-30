@@ -11,7 +11,7 @@ const getContacts = (_: Request, res: Response) => {
   }
 }
 
-const getContactById = (req: Request<{ id: string }, IContact>, res: Response) => {
+const getContactById = (req: Request<{ id: number }, IContact>, res: Response) => {
   try {
     return res.send(contacts.getOne(req.params.id));
   } catch (err: any) {
@@ -28,7 +28,7 @@ const createContact = (req: Request<{}, IContact, INewContact>, res: Response) =
   }
 }
 
-const updateContact = (req: Request<{ id: string }, IContact, INewContact>, res: Response) => {
+const updateContact = (req: Request<{ id: number }, IContact, INewContact>, res: Response) => {
   try {
     const validateContact = toNewContact(req.body);
     return res.send(contacts.update({ id: req.params.id, ...validateContact }));
@@ -37,7 +37,7 @@ const updateContact = (req: Request<{ id: string }, IContact, INewContact>, res:
   }
 }
 
-const deleteContact = (req: Request<{ id: string }, string>, res: Response) => {
+const deleteContact = (req: Request<{ id: number }, string>, res: Response) => {
   try {
     return res.send(contacts.delete(req.params.id));
   } catch (err: any) {

@@ -12,7 +12,7 @@ function saveJson() {
 
 const getAll = () => contacts;
 
-const getOne = (id: string) => {
+const getOne = (id: number) => {
   const contact = contacts.find(contact => contact.id === id);
   if (!contact) {
     throw new BadRequest('No user found by provided ID', 404);
@@ -22,7 +22,7 @@ const getOne = (id: string) => {
 
 const create = (newContactInfo: INewContact) => {
   const newContact: IContact = {
-    id: (Number(contacts[contacts.length-1].id) + 1).toString(),
+    id: Number(contacts[contacts.length-1].id) + 1,
     ...newContactInfo,
     date: moment().format('YYYY-MM-DD')
   }
@@ -45,7 +45,7 @@ const update = (updatedContact: Omit<IContact, 'date'>) => {
   throw new BadRequest('No user found by provided ID', 404);
 }
 
-const _delete = (id: string) => {
+const _delete = (id: number) => {
   for (const [idx, contact] of contacts.entries()) {
     if (contact.id === id) {
       contacts.splice(idx, 1);
