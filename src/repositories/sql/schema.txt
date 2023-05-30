@@ -4,9 +4,11 @@ CREATE TABLE `rooms` (
   `name` VARCHAR(255) NOT NULL,
   `bed_type` VARCHAR(255),
   `photo` VARCHAR(255),
+  `description` VARCHAR(255),
   `amenities` VARCHAR(255),
   `rate` FLOAT(10, 2),
-  `status` VARCHAR(255),
+  `offer` FLOAT(10, 2),
+  `available` BOOLEAN,
 	PRIMARY KEY (`id`)
 );
 
@@ -48,6 +50,7 @@ CREATE TABLE `users` (
   `email` VARCHAR(255),
   `password` VARCHAR(255),
   `photo` VARCHAR(255),
+  `phone` VARCHAR(255),
   `position` VARCHAR(255),
   `state` VARCHAR(255),
   `username` VARCHAR(255),
