@@ -2,7 +2,7 @@ import { IRoom, INewRoom } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import { db } from './db';
-import { OkPacket, RowDataPacket } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 const rooms: IRoom[] = JSON.parse(fs.readFileSync(__dirname + '/databases/rooms.json').toString());
 
@@ -25,9 +25,12 @@ const getOne = async (id: number) => {
 }
 
 const create = async (r: INewRoom) => {
-  const results = await db.promise().query(`INSERT INTO rooms (\`name\`, \`bed_type\`, \`photo\`, \`description\`, \`amenities\`, \`rate\`, \`offer\`, \`available\`)
+  const results = await db.promise().query<ResultSetHeader>(`INSERT INTO rooms (\`name\`, \`bed_type\`, \`photo\`, \`description\`, \`amenities\`, \`rate\`, \`offer\`, \`available\`)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available]);
-  return results;
+  return {
+    id: results[0].insertId,
+    ...r
+  };
 }
 
 const update = async (r: IRoom) => {
@@ -36,15 +39,15 @@ const update = async (r: IRoom) => {
   if (!results) {
     throw new BadRequest('No room found by provided ID', 404);
   }
-  return results;
+  return r;
 }
 
 const _delete = (id: number) => {
-  const results = db.promise().query('DELETE FROM rooms WHERE id=?', [id]);
+  const results = db.promise().query<ResultSetHeader>('DELETE FROM rooms WHERE id=?', [id]);
   if (!results) {
     throw new BadRequest('No room found by provided ID', 404);
   }
-  return results;
+  return `Room with id ${id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }
