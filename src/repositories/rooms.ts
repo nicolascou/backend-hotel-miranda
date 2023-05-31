@@ -2,6 +2,7 @@ import { IRoom, INewRoom } from '../models/types';
 import { BadRequest } from '../models/error';
 import fs from 'fs';
 import { db } from './db';
+import { RowDataPacket } from 'mysql2';
 
 const rooms: IRoom[] = JSON.parse(fs.readFileSync(__dirname + '/databases/rooms.json').toString());
 
@@ -11,43 +12,46 @@ function saveJson() {
 }
 
 const getAll = async (): Promise<IRoom[]> => {
-  return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM rooms', function(err, results) {
-      if (err) {
-        reject(err);
-      }
+  return new Promise((resolve) => {
+    db.query('SELECT * FROM rooms', (err, results) => {
+      if (err) throw new Error('Query to database failed');
       resolve(results as IRoom[]);
     });
   });
 };
 
-const getOne = (id: number) => {
-  const room = rooms.find(room => room.id === id);
-  if (!room) {
-    throw new BadRequest('No room found by provided ID', 404);
-  }
-  return room;
+const getOne = async (id: number): Promise<IRoom> => {
+  return new Promise((resolve) => {
+    db.query('SELECT * FROM rooms WHERE id=?', [id], (err, results) => {
+      if ((results as RowDataPacket[]).length === 0) throw new BadRequest('No room found by provided ID', 404);
+      if (err) throw new Error('Query to database failed');
+      resolve((results as RowDataPacket[])[0] as IRoom);
+    })
+  });
 }
 
-const create = (newRoomInfo: INewRoom) => {
-  const newRoom: IRoom = {
-    id: rooms[rooms.length-1].id + 1,
-    ...newRoomInfo
-  }
-  rooms.push(newRoom);
-  saveJson();
-  return newRoom;
+const create = async (r: INewRoom): Promise<INewRoom> => {
+  return new Promise((resolve) => {
+    db.query(`INSERT INTO rooms (\`name\`, \`bed_type\`, \`photo\`, \`description\`, \`amenities\`, \`rate\`, \`offer\`, \`available\`)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available], 
+    (err, results) => {
+      if (err) throw new Error('Query to database failed');
+      console.log(results)
+      resolve(r)
+    })
+  });
 }
 
-const update = (newRoom: IRoom) => {
-  for (let [idx, room] of rooms.entries()) {
-    if (room.id === newRoom.id) {
-      rooms[idx] = newRoom;
-      saveJson();
-      return rooms[idx];
-    }
-  }
-  throw new BadRequest('No room found by provided ID', 404);
+const update = async (r: IRoom) => {
+  return new Promise((resolve) => {
+    db.query('UPDATE rooms SET name=?, bed_type=?, photo=?, description=?, amenities=?, rate=?, offer=?, available=?, WHERE id=?',
+    [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available, r.id],
+    (err, results) => {
+      if ((results as RowDataPacket[]).length === 0) throw new BadRequest('No room found by provided ID', 404);
+      if (err) throw new Error('Query to database failed');
+      resolve(results);
+    });
+  });
 }
 
 const _delete = (id: number) => {
