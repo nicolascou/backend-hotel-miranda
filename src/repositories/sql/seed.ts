@@ -5,24 +5,24 @@
 // function generateRooms() {
 //   for (let i = 0; i < 15; i++) {
 //     const o: Omit<IRoom, 'id'> = {
-//       name: faker.string.uuid(),
+//       name: faker.internet.userName(),
 //       // bed_type: Double Bed,
 //       photo: faker.image.avatar(),
 //       description: faker.string.sample(),
 //       // amenities: faker.,
 //       rate: faker.number.float(),
-//       // offer: faker.,
+//       offer: faker.number.float(),
 //       available: true
 //     }
     
 //     db.query(
 //       `INSERT INTO \`rooms\` (name, bed_type, photo, description, amenities, rate, available) 
-//       VALUES (${o.name}, ${o.bed_type}, ${o.photo}, ${o.amenities}, ${o.rate}, ${o.rate})`,
-//       function(err, results) {
+//       VALUES (?, ?, ?, ?, ?, ?)`,
+//       [o.name, o.bed_type, o.photo, o.amenities, o.rate, o.rate],
+//       (err, results) => {
 //         console.log(results);
 //         console.error(err);
-//       }
-//     );
+//       });
 //   }
 // }
 
