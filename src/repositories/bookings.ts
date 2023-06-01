@@ -29,7 +29,7 @@ const create = async (b: INewBooking) => {
 const update = async (b: INewBooking & {id: number}) => {
   const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE bookings SET room_id=?, guest=?, photo=?, check_in=?, check_out=?, room_type=?, special_request=? WHERE id=?',
   [b.room_id, b.guest, b.photo, b.check_in, b.check_out, b.room_type, b.special_request, b.id]);
-  if (results.insertId) {
+  if (results.affectedRows === 0) {
     throw new BadRequest('No booking found by provided ID', 404);
   }
   return b;

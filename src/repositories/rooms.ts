@@ -28,7 +28,7 @@ const create = async (r: INewRoom) => {
 const update = async (r: IRoom) => {
   const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE rooms SET name=?, bed_type=?, photo=?, description=?, amenities=?, rate=?, offer=?, available=? WHERE id=?',
   [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available, r.id]);
-  if (results.insertId) {
+  if (results.affectedRows === 0) {
     throw new BadRequest('No room found by provided ID', 404);
   }
   return r;
