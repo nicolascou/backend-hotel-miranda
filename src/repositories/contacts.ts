@@ -19,22 +19,18 @@ const getOne = async (id: number) => {
 
 const create = async (c: INewContact) => {
   const date = moment().format('YYYY/MM/DD');
-  const [ results ] = await db.promise().query<ResultSetHeader>(`INSERT INTO contact (date, name, email, phone, subject, comment, archived) 
+  const [ results ] = await db.promise().query<RowDataPacket[]>(`INSERT INTO contact (date, name, email, phone, subject, comment, archived) 
     VALUES (?, ?, ?, ?, ?, ?, ?)`, [date, c.name, c.email, c.phone, c.subject, c.comment, c.archived]);
-  return {
-    id: results.insertId,
-    ...c,
-    date
-  }
+  return results[0] as IContact;
 }
 
 const update = async (c: Omit<IContact, 'date'>) => {
-  const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE contact SET name=?, email=?, phone=?, subject=?, comment=?, archived=? WHERE id=?', 
+  const [ results ] = await db.promise().query<RowDataPacket[]>('UPDATE contact SET name=?, email=?, phone=?, subject=?, comment=?, archived=? WHERE id=?', 
   [c.name, c.email, c.phone, c.subject, c.comment, c.archived, c.id])
-  if (results.affectedRows === 0) {
+  if (!results[0]) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
-  return c;
+  return results[0] as IContact;
 }
 
 const _delete = async (id: number) => {

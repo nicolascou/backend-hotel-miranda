@@ -18,21 +18,18 @@ const getOne = async (id: number) => {
 }
 
 const create = async (b: INewBooking) => {
-  const [ results ] = await db.promise().query<ResultSetHeader>(`INSERT INTO bookings (\`room_id\`, \`guest\`, \`guest_id\`, \`photo\`, \`order_date\`, \`check_in\`, \`check_out\`, \`room_type\`, \`special_request\`)
+  const [ results ] = await db.promise().execute<RowDataPacket[]>(`INSERT INTO bookings (\`room_id\`, \`guest\`, \`guest_id\`, \`photo\`, \`order_date\`, \`check_in\`, \`check_out\`, \`room_type\`, \`special_request\`)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [b.room_id, b.guest, '#' + Math.trunc(Math.random() * 100000000), b.photo, moment().format('YYYY/MM/DD'), b.check_in, b.check_out, b.room_type, b.special_request]);
-  return {
-    id: results.insertId,
-    ...b
-  };
+  return results[0] as IBooking;
 }
 
 const update = async (b: INewBooking & {id: number}) => {
-  const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE bookings SET room_id=?, guest=?, photo=?, check_in=?, check_out=?, room_type=?, special_request=? WHERE id=?',
+  const [ results ] = await db.promise().execute<RowDataPacket[]>('UPDATE bookings SET room_id=?, guest=?, photo=?, check_in=?, check_out=?, room_type=?, special_request=? WHERE id=?',
   [b.room_id, b.guest, b.photo, b.check_in, b.check_out, b.room_type, b.special_request, b.id]);
-  if (results.affectedRows === 0) {
+  if (!results[0]) {
     throw new BadRequest('No booking found by provided ID', 404);
   }
-  return b;
+  return results[0] as IBooking;
 }
 
 const _delete = async (id: number) => {
