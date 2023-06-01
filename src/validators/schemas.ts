@@ -32,11 +32,12 @@ export const contactSchema = Joi.object({
 
 export const userSchema = Joi.object({
   full_name: Joi.string().required(),
+  username: Joi.string(),
   photo: Joi.string().uri(),
   phone: Joi.string().length(9),
   position: Joi.string(),
   description: Joi.string(),
   email: Joi.string().email(),
-  actie: Joi.boolean(),
+  active: Joi.boolean(),
   password: Joi.string()
 });

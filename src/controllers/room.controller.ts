@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import rooms from '../repositories/rooms';
 import { IRoom, INewRoom } from '../models/types';
-import toNewRoom from '../utils/toNewRoom';
+import { roomSchema } from '../validators/schemas';
+import { BadRequest } from '../models/error';
 
 const getRooms = async (_: Request, res: Response) => {
   try {
@@ -21,7 +22,10 @@ const getRoomById = async (req: Request<{ id: string }, IRoom>, res: Response) =
 
 const createRoom = async (req: Request<{}, IRoom, INewRoom>, res: Response) => {
   try {
-    // const newRoom = toNewRoom(req.body);
+    const { error } = roomSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.status(201).send(await rooms.create(req.body));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
@@ -30,7 +34,10 @@ const createRoom = async (req: Request<{}, IRoom, INewRoom>, res: Response) => {
 
 const updateRoom = async (req: Request<{ id: string }, IRoom, INewRoom>, res: Response) => {
   try {
-    // const validateRoom = toNewRoom(req.body);
+    const { error } = roomSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.send(await rooms.update({ id: Number(req.params.id), ...req.body }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);

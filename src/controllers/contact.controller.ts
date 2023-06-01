@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import contacts from '../repositories/contacts';
 import { IContact, INewContact } from '../models/types';
-import toNewContact from '../utils/toNewContact';
+import { contactSchema } from '../validators/schemas';
+import { BadRequest } from '../models/error';
 
 const getContacts = async (_: Request, res: Response) => {
   try {
@@ -21,7 +22,10 @@ const getContactById = async (req: Request<{ id: number }, IContact>, res: Respo
 
 const createContact = async (req: Request<{}, IContact, INewContact>, res: Response) => {
   try {
-    // const newContact = toNewContact(req.body);
+    const { error } = contactSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.status(201).send(await contacts.create(req.body));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
@@ -30,7 +34,10 @@ const createContact = async (req: Request<{}, IContact, INewContact>, res: Respo
 
 const updateContact = async (req: Request<{ id: number }, IContact, INewContact>, res: Response) => {
   try {
-    // const validateContact = toNewContact(req.body);
+    const { error } = contactSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.send(await contacts.update({ id: req.params.id, ...req.body }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);

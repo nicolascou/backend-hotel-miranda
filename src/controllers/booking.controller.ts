@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import bookings from '../repositories/bookings';
 import { IBooking, INewBooking } from '../models/types';
+import { bookingSchema } from '../validators/schemas';
+import { BadRequest } from '../models/error';
 
 const getBookings = async (_: Request, res: Response) => {
   try {
@@ -20,7 +22,10 @@ const getBookingById = async (req: Request<{ id: string }, IBooking>, res: Respo
 
 const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Response) => {
   try {
-    // const newBooking = toNewBooking(req.body);
+    const { error } = bookingSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.status(201).send(await bookings.create(req.body));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
@@ -29,7 +34,10 @@ const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Respo
 
 const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>, res: Response) => {
   try {
-    // const validateBooking = toNewBooking(req.body);
+    const { error } = bookingSchema.validate(req.body);
+    if (error) {
+      throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
+    }
     return res.send(await bookings.update({ id: Number(req.params.id), ...req.body }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
