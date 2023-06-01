@@ -1,27 +1,27 @@
 export interface IUser {
   id: number;
-  full_name: string | undefined;
-  username: string | undefined;
-  photo: string | undefined;
-  phone?: string | undefined;
-  position: string | undefined;
-  description: string | undefined;
-  email: string | undefined;
+  full_name: string;
+  username: string;
+  photo: string;
+  phone?: string;
+  position: string;
+  description: string;
+  email: string;
   start_date: string;
-  active: boolean | undefined;
-  password: string | undefined;
+  active: boolean;
+  password: string;
 }
 
 export interface INewUser {
-  full_name: string | undefined;
-  username: string | undefined;
-  photo: string | undefined;
-  phone?: string | undefined;
-  position: string | undefined;
-  description: string | undefined;
-  email: string | undefined;
-  active: boolean | undefined;
-  password: string | undefined;
+  full_name: string;
+  username: string;
+  photo: string;
+  phone?: string;
+  position: string;
+  description: string;
+  email: string;
+  active: boolean;
+  password: string;
 }
 
 export interface IBooking {

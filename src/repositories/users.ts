@@ -28,7 +28,7 @@ const create = async (u: INewUser) => {
   }
 }
 
-const update = async (u: Partial<IUser>) => {
+const update = async (u: Omit<IUser, 'start_date'>) => {
   const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE users SET full_name=?, description=?, email=?, password=?, photo=?, position=?, active=?, username=?, phone=? WHERE id=?',
   [u.full_name, u.description, u.email, u.password, u.photo, u.position, u.active, u.username, u.phone, u.id]);
   if (results.affectedRows === 0) {
