@@ -3,43 +3,43 @@ import users from '../repositories/users';
 import { IUser, INewUser } from '../models/types';
 import toNewUser from '../utils/toNewUser';
 
-const getUsers = (_: Request, res: Response) => {
+const getUsers = async (_: Request, res: Response) => {
   try {
-    return res.send(users.getAll());
+    return res.send(await users.getAll());
   } catch (err: any) {
     return res.sendStatus(500);
   }
 }
 
-const getUserById = (req: Request<{ id: string }, IUser>, res: Response) => {
+const getUserById = async (req: Request<{ id: string }, IUser>, res: Response) => {
   try {
-    return res.send(users.getOne(Number(req.params.id)));
+    return res.send(await users.getOne(Number(req.params.id)));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const createUser = (req: Request<{}, IUser, INewUser>, res: Response) => {
+const createUser = async (req: Request<{}, IUser, INewUser>, res: Response) => {
   try {
-    const newUser = toNewUser(req.body);
-    return res.status(201).send(users.create(newUser));
+    // const newUser = toNewUser(req.body);
+    return res.status(201).send(await users.create(req.body));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const updateUser = (req: Request<{ id: string }, IUser, INewUser>, res: Response) => {
+const updateUser = async (req: Request<{ id: string }, IUser, INewUser>, res: Response) => {
   try {
-    const validateUser = toNewUser(req.body);
-    return res.send(users.update({ id: Number(req.params.id), ...validateUser }));
+    // const validateUser = toNewUser(req.body);
+    return res.send(await users.update({ id: Number(req.params.id), ...req.body }));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
 }
 
-const deleteUser = (req: Request<{ id: string }, string>, res: Response) => {
+const deleteUser = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
-    return res.send(users.delete(Number(req.params.id)));
+    return res.send(await users.delete(Number(req.params.id)));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

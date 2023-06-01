@@ -1,59 +1,48 @@
 import { INewUser, IUser } from '../models/types';
 import { BadRequest } from '../models/error';
-import fs from 'fs';
 import moment from 'moment';
+import { db } from './db';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
-const users: IUser[] = JSON.parse(fs.readFileSync(__dirname + '/databases/users.json').toString());
+const getAll = async () => {
+  const [ results ] = await db.promise().query('SELECT * FROM users');
+  return results as IUser[];
+};
 
-function saveJson() {
-  const jsonData = JSON.stringify(users, null, 2);
-  fs.writeFileSync(__dirname + '/databases/users.json', jsonData);
-}
-
-const getAll = () => users;
-
-const getOne = (id: number) => {
-  const user = users.find(user => user.id === id);
-  if (!user) {
+const getOne = async (id: number) => {
+  const [ results ] = await db.promise().query<RowDataPacket[]>('SELECT * FROM users WHERE id=?', [id]);
+  if (!results[0]) {
     throw new BadRequest('No user found by provided ID', 404);
   }
-  return user;
+  return results[0] as IUser;
 }
 
-const create = (newUserInfo: INewUser) => {
-  const newUser: IUser = {
-    id: users[users.length-1].id + 1,
-    ...newUserInfo,
-    start_date: moment().format('YYYY-MM-DD')
+const create = async (u: INewUser) => {
+  const start_date = moment().format('YYYY-MM-DD');
+  const [ results ] = await db.promise().query<ResultSetHeader>('INSERT INTO users (full_name, description, email, password, photo, position, state, username, phone, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  [u.full_name, u.description, u.email, u.password, u.photo, u.position, u.state, u.username, u.phone, start_date]);
+  return {
+    id: results.insertId,
+    ...u,
+    start_date
   }
-  users.push(newUser);
-  saveJson();
-  return newUser;
 }
 
-const update = (updatedUser: Partial<IUser>) => {
-  for (let [idx, user] of users.entries()) {
-    if (user.id === updatedUser.id) {
-      users[idx] = {
-        ...user,
-        ...updatedUser,
-      }
-      saveJson();
-      return users[idx];
-    }
+const update = async (u: Partial<IUser>) => {
+  const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE users SET full_name=?, description=?, email=?, password=?, photo=?, position=?, state=?, username=?, phone=? WHERE id=?',
+  [u.full_name, u.description, u.email, u.password, u.photo, u.position, u.state, u.username, u.phone, u.id]);
+  if (results.affectedRows === 0) {
+    throw new BadRequest('No user found by provided ID', 404);
   }
-  throw new BadRequest('No user found by provided ID', 404);
+  return u;
 }
 
-const _delete = (id: number) => {
-  for (const [idx, user] of users.entries()) {
-    if (user.id === id) {
-      users.splice(idx, 1);
-       saveJson();
-      return `User ${id} Deleted`;
-    }
+const _delete = async (id: number) => {
+  const [ results ] = await db.promise().query<ResultSetHeader>('DELETE FROM users WHERE id=?', [id]);
+  if (results.affectedRows === 0) {
+    throw new BadRequest('No user found by provided ID', 404);
   }
-  throw new BadRequest('No user found by provided ID', 404);
+  return `User with ID ${id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }

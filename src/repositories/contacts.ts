@@ -1,16 +1,8 @@
 import { IContact, INewContact } from '../models/types';
 import { BadRequest } from '../models/error';
-import fs from 'fs';
 import moment from 'moment';
 import { db } from './db';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
-
-const contacts: IContact[] = JSON.parse(fs.readFileSync(__dirname + '/databases/contact.json').toString());
-
-function saveJson() {
-  const jsonData = JSON.stringify(contacts, null, 2);
-  fs.writeFileSync(__dirname + '/databases/contact.json', jsonData);
-}
 
 const getAll = async () => {
   const [ results ] = await db.promise().query('SELECT * FROM contact');
