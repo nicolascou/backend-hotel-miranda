@@ -8,7 +8,7 @@ export interface IUser {
   description: string | undefined;
   email: string | undefined;
   start_date: string;
-  state: string | undefined;
+  active: boolean | undefined;
   password: string | undefined;
 }
 
@@ -20,7 +20,7 @@ export interface INewUser {
   position: string | undefined;
   description: string | undefined;
   email: string | undefined;
-  state: string | undefined;
+  active: boolean | undefined;
   password: string | undefined;
 }
 
@@ -35,7 +35,6 @@ export interface IBooking {
   check_out: string;
   room_type: string | undefined;
   special_request: string | undefined;
-  status: 'Check In' | 'In Progress' | 'Check Out';
 }
 
 export interface INewBooking {
@@ -46,7 +45,6 @@ export interface INewBooking {
   check_out: string;
   room_type: string | undefined;
   special_request: string | undefined;
-  status: 'Check In' | 'In Progress' | 'Check Out';
 }
 
 export interface IRoom {
