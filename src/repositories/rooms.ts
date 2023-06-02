@@ -17,18 +17,21 @@ const getOne = async (id: number) => {
 }
 
 const create = async (r: INewRoom) => {
-  const [ results ] = await db.promise().execute<RowDataPacket[]>(`INSERT INTO rooms (\`name\`, \`bed_type\`, \`photo\`, \`description\`, \`amenities\`, \`rate\`, \`offer\`, \`available\`)
+  const [ results ] = await db.promise().query<ResultSetHeader>(`INSERT INTO rooms (\`name\`, \`bed_type\`, \`photo\`, \`description\`, \`amenities\`, \`rate\`, \`offer\`, \`available\`)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available]);
-  return results[0] as IRoom;
+  return {
+    id: results.insertId,
+    r
+  };
 }
 
 const update = async (r: IRoom) => {
-  const [ results ] = await db.promise().execute<RowDataPacket[]>('UPDATE rooms SET name=?, bed_type=?, photo=?, description=?, amenities=?, rate=?, offer=?, available=? WHERE id=?',
+  const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE rooms SET name=?, bed_type=?, photo=?, description=?, amenities=?, rate=?, offer=?, available=? WHERE id=?',
   [r.name, r.bed_type, r.photo, r.description, JSON.stringify(r.amenities), r.rate, r.offer, r.available, r.id]);
-  if (!results[0]) {
+  if (results.affectedRows === 0) {
     throw new BadRequest('No room found by provided ID', 404);
   }
-  return results[0] as IRoom;
+  return r;
 }
 
 const _delete = async (id: number) => {

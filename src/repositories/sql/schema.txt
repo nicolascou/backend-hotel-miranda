@@ -26,7 +26,7 @@ CREATE TABLE `bookings` (
 	`special_request` VARCHAR(255),
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`room_id`) REFERENCES rooms(`id`)
-	ON DELETE CASCADE ON UPDATE cascade
+	ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `contact` (
