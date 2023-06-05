@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import rooms from '../repositories/rooms';
 import { IRoom, INewRoom } from '../models/types';
-import { roomSchema } from '../validators/schemas';
+import { roomJoiSchema } from '../validators/schemas';
 import { BadRequest } from '../models/error';
 
 const getRooms = async (_: Request, res: Response) => {
@@ -22,7 +22,7 @@ const getRoomById = async (req: Request<{ id: string }, IRoom>, res: Response) =
 
 const createRoom = async (req: Request<{}, IRoom, INewRoom>, res: Response) => {
   try {
-    const { error } = roomSchema.validate(req.body);
+    const { error } = roomJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
@@ -34,7 +34,7 @@ const createRoom = async (req: Request<{}, IRoom, INewRoom>, res: Response) => {
 
 const updateRoom = async (req: Request<{ id: string }, IRoom, INewRoom>, res: Response) => {
   try {
-    const { error } = roomSchema.validate(req.body);
+    const { error } = roomJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }

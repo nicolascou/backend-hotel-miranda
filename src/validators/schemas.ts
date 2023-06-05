@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-export const roomSchema = Joi.object({
+export const roomJoiSchema = Joi.object({
   name: Joi.string().required(),
   bed_type: Joi.string().valid('Single Bed', 'Double Bed', 'Double Luxury').required(),
   photo: Joi.string().uri(),
@@ -11,7 +11,7 @@ export const roomSchema = Joi.object({
   available: Joi.boolean()
 });
 
-export const bookingSchema = Joi.object({
+export const bookingJoiSchema = Joi.object({
   room_id: Joi.number().required(),
   guest: Joi.string().required(),
   photo: Joi.string().uri(),
@@ -21,7 +21,7 @@ export const bookingSchema = Joi.object({
   special_request: Joi.string()
 });
 
-export const contactSchema = Joi.object({
+export const contactJoiSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.string().length(9),
@@ -30,7 +30,7 @@ export const contactSchema = Joi.object({
   archived: Joi.boolean()
 });
 
-export const userSchema = Joi.object({
+export const userJoiSchema = Joi.object({
   full_name: Joi.string().required(),
   username: Joi.string(),
   photo: Joi.string().uri(),

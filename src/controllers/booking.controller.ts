@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bookings from '../repositories/bookings';
 import { IBooking, INewBooking } from '../models/types';
-import { bookingSchema } from '../validators/schemas';
+import { bookingJoiSchema } from '../validators/schemas';
 import { BadRequest } from '../models/error';
 
 const getBookings = async (_: Request, res: Response) => {
@@ -22,7 +22,7 @@ const getBookingById = async (req: Request<{ id: string }, IBooking>, res: Respo
 
 const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Response) => {
   try {
-    const { error } = bookingSchema.validate(req.body);
+    const { error } = bookingJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
@@ -34,7 +34,7 @@ const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Respo
 
 const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>, res: Response) => {
   try {
-    const { error } = bookingSchema.validate(req.body);
+    const { error } = bookingJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
