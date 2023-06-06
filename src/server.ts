@@ -23,7 +23,9 @@ app.use('/bookings', passport.authenticate('jwt', { session: false }), BookingRo
 app.use('/rooms', passport.authenticate('jwt', { session: false }), RoomRouter);
 app.use('/contact', passport.authenticate('jwt', { session: false }), ContactRouter);
 
-export const server = app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
+}
 
 const connextionString = 'mongodb://localhost:27017/miranda';
 

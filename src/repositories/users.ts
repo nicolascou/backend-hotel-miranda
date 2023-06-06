@@ -35,7 +35,7 @@ const update = async (u: INewUser, _id: string) => {
 }
 
 const _delete = async (_id: string) => {
-  const user = User.findOneAndDelete({ _id });
+  const user = await User.findOneAndDelete({ _id });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);
   }

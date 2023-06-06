@@ -1,4 +1,4 @@
-import app, { server } from '../src/server';
+import app from '../src/server';
 import supertest from 'supertest';
 
 describe('Login Route', () => {
@@ -23,5 +23,3 @@ describe('Login Route', () => {
       .expect(500);
   });
 });
-
-server.close();
