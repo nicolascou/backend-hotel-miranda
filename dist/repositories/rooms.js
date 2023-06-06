@@ -8,43 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const error_1 = require("../models/error");
-const moment_1 = __importDefault(require("moment"));
 const models_1 = require("./db/models");
 const getAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield models_1.User.find();
-    return users;
+    const rooms = yield models_1.Room.find();
+    return rooms;
 });
 const getOne = (_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield models_1.User.findOne({ _id });
-    if (!user) {
-        throw new error_1.BadRequest('No user found by provided ID', 404);
+    const room = yield models_1.Room.findOne({ _id });
+    if (!room) {
+        throw new error_1.BadRequest('No room found by provided ID', 404);
     }
-    return user;
+    return room;
 });
-const create = (u) => __awaiter(void 0, void 0, void 0, function* () {
-    const start_date = (0, moment_1.default)().format('YYYY-MM-DD');
-    const user = new models_1.User(Object.assign({ start_date }, u));
-    return yield user.save();
+const create = (r) => __awaiter(void 0, void 0, void 0, function* () {
+    const room = new models_1.Room(r);
+    return yield room.save();
 });
-const update = (u, _id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield models_1.User.findOneAndUpdate({ _id }, {
-        $set: Object.assign({}, u)
+const update = (r, _id) => __awaiter(void 0, void 0, void 0, function* () {
+    const room = yield models_1.Room.findOneAndUpdate({ _id }, {
+        $set: Object.assign({}, r)
     }, { new: true });
-    if (!user) {
-        throw new error_1.BadRequest('No user found by provided ID', 404);
+    if (!room) {
+        throw new error_1.BadRequest('No room found by provided ID', 404);
     }
-    return user;
+    return room;
 });
 const _delete = (_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield models_1.User.findOneAndDelete({ _id });
-    if (!user) {
-        throw new error_1.BadRequest('No user found by provided ID', 404);
+    const room = yield models_1.Room.findOneAndDelete({ _id });
+    if (!room) {
+        throw new error_1.BadRequest('No room found by provided ID', 404);
     }
-    return `User with id ${_id} deleted`;
+    return `Room with id ${_id} deleted`;
 });
 exports.default = { getAll, getOne, create, update, delete: _delete };
