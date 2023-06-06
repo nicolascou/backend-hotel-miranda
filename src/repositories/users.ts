@@ -8,7 +8,7 @@ const getAll = async () => {
   return users;
 };
 
-const getOne = async (id: number) => {
+const getOne = async (id: string) => {
   const user: IUser | null = await User.findOne({ id });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);

@@ -8,7 +8,7 @@ const getAll = async () => {
   return contacts;
 };
 
-const getOne = async (_id: number) => {
+const getOne = async (_id: string) => {
   const contact: IContact | null = await Contact.findOne({ _id });
   if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);

@@ -14,7 +14,7 @@ const roomSchema = new mongoose.Schema({
 export const Room = model('Room', roomSchema);
 
 const bookingSchema = new mongoose.Schema({
-  room_id: Number,
+  room_id: String,
   guest: String,
   guest_id: String,
   photo: String,

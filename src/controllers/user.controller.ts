@@ -19,7 +19,7 @@ const getUsers = async (_: Request, res: Response) => {
 
 const getUserById = async (req: Request<{ id: string }, IUser>, res: Response) => {
   try {
-    return res.send(await users.getOne(Number(req.params.id)));
+    return res.send(await users.getOne(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

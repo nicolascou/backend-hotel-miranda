@@ -12,7 +12,7 @@ export const roomJoiSchema = Joi.object({
 });
 
 export const bookingJoiSchema = Joi.object({
-  room_id: Joi.number().required(),
+  room_id: Joi.string().required(),
   guest: Joi.string().required(),
   photo: Joi.string().uri(),
   check_in: Joi.string(),

@@ -26,7 +26,7 @@ export interface INewUser {
 
 export interface IBooking {
   _id: string;
-  room_id: number;
+  room_id: string;
   guest: string | undefined;
   guest_id: string;
   photo: string | undefined;
@@ -38,7 +38,7 @@ export interface IBooking {
 }
 
 export interface INewBooking {
-  room_id: number;
+  room_id: string;
   guest: string | undefined;
   photo: string | undefined;
   check_in: string;

@@ -14,7 +14,7 @@ const getRooms = async (_: Request, res: Response) => {
 
 const getRoomById = async (req: Request<{ id: string }, IRoom>, res: Response) => {
   try {
-    return res.send(await rooms.getOne(Number(req.params.id)));
+    return res.send(await rooms.getOne(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

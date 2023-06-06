@@ -14,7 +14,7 @@ const getBookings = async (_: Request, res: Response) => {
 
 const getBookingById = async (req: Request<{ id: string }, IBooking>, res: Response) => {
   try {
-    return res.send(await bookings.getOne(Number(req.params.id)));
+    return res.send(await bookings.getOne(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
@@ -46,7 +46,7 @@ const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>
 
 const deleteBooking = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
-    return res.send(await bookings.delete(Number(req.params.id)));
+    return res.send(await bookings.delete(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

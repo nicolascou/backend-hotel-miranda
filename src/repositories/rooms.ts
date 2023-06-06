@@ -7,7 +7,7 @@ const getAll = async () => {
   return rooms;
 };
 
-const getOne = async (id: number) => {
+const getOne = async (id: string) => {
   const room: IRoom | null = await Room.findOne({ id });
   if (!room) {
     throw new BadRequest('No room found by provided ID', 404);

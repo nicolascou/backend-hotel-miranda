@@ -12,7 +12,7 @@ const getContacts = async (_: Request, res: Response) => {
   }
 }
 
-const getContactById = async (req: Request<{ id: number }, IContact>, res: Response) => {
+const getContactById = async (req: Request<{ id: string }, IContact>, res: Response) => {
   try {
     return res.send(await contacts.getOne(req.params.id));
   } catch (err: any) {
