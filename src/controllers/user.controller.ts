@@ -19,6 +19,9 @@ const getUsers = async (_: Request, res: Response) => {
 
 const getUserById = async (req: Request<{ id: string }, IUser>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     return res.send(await users.getOne(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
@@ -40,6 +43,9 @@ const createUser = async (req: Request<{}, IUser, INewUser>, res: Response) => {
 
 const updateUser = async (req: Request<{ id: string }, IUser, INewUser>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     const { error } = userJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
@@ -53,6 +59,9 @@ const updateUser = async (req: Request<{ id: string }, IUser, INewUser>, res: Re
 
 const deleteUser = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     return res.send(await users.delete(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);

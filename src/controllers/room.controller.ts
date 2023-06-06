@@ -14,6 +14,9 @@ const getRooms = async (_: Request, res: Response) => {
 
 const getRoomById = async (req: Request<{ id: string }, IRoom>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     return res.send(await rooms.getOne(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
@@ -34,6 +37,9 @@ const createRoom = async (req: Request<{}, IRoom, INewRoom>, res: Response) => {
 
 const updateRoom = async (req: Request<{ id: string }, IRoom, INewRoom>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     const { error } = roomJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
@@ -46,6 +52,9 @@ const updateRoom = async (req: Request<{ id: string }, IRoom, INewRoom>, res: Re
 
 const deleteRoom = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest('Invalid ID Format', 400);
+    }
     return res.send(await rooms.delete(Number(req.params.id)));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
