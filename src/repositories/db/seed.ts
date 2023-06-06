@@ -2,6 +2,9 @@ import { IBooking, IContact, IRoom, IUser } from '../../models/types';
 import { faker } from '@faker-js/faker';
 import moment from 'moment';
 import { Contact, Booking, Room, User } from './models';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost:27017/miranda');
 
 async function generateRooms() {
   for (let i = 0; i < 15; i++) {
@@ -80,8 +83,10 @@ async function generateUsers() {
   }
 }
 
-generateRooms();
-generateBookings();
-generateUsers();
-generateContacts();
-console.log('Done');
+console.log('Generating data...')
+generateRooms().then(() => {
+  console.log('Rooms generated');
+  generateBookings().then(() => console.log('Bookings generated'));
+});
+generateContacts().then(() => console.log('Contacts generated'));
+generateUsers().then(() => console.log('Users generated'));

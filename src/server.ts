@@ -25,7 +25,7 @@ app.use('/contact', passport.authenticate('jwt', { session: false }), ContactRou
 
 export const server = app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
 
-const connextionString = `mongodb://localhost:27017/miranda`;
+const connextionString = 'mongodb://localhost:27017/miranda';
 
 mongoose.connect(connextionString)
   .then(() => console.log('Connected to Database'))
