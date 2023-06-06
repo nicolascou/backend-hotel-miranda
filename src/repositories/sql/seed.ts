@@ -80,8 +80,10 @@ async function generateUsers() {
   }
 }
 
-generateBookings();
-generateRooms();
-generateContacts();
-generateUsers();
-console.log('done');
+console.log('Generating data...')
+generateRooms().then(() => {
+  console.log('Rooms generated');
+  generateBookings().then(() => console.log('Bookings generated'));
+});
+generateContacts().then(() => console.log('Contacts generated'));
+generateUsers().then(() => console.log('Users generated'));
