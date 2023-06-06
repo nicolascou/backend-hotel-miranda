@@ -1,9 +1,7 @@
-import mysql from 'mysql2';
-import 'dotenv/config';
+import mongoose from "mongoose";
 
-export const db = mysql.createConnection({
-  host: 'localhost',
-  user: process.env.DB_USER,
-  database: 'miranda',
-  password: process.env.DB_PASSWORD
-});
+const connextionString = `mongodb://localhost:27017`;
+
+mongoose.connect(connextionString)
+  .then(() => console.log('Connected to Database'))
+  .catch((err) => console.error(err));
