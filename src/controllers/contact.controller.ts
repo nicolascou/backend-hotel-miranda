@@ -32,13 +32,13 @@ const createContact = async (req: Request<{}, IContact, INewContact>, res: Respo
   }
 }
 
-const updateContact = async (req: Request<{ id: number }, IContact, INewContact>, res: Response) => {
+const updateContact = async (req: Request<{ id: string }, IContact, INewContact>, res: Response) => {
   try {
     const { error } = contactJoiSchema.validate(req.body);
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
-    return res.send(await contacts.update({ id: req.params.id, ...req.body }));
+    return res.send(await contacts.update(req.body, req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

@@ -1,47 +1,45 @@
 import { IContact, INewContact } from '../models/types';
 import { BadRequest } from '../models/error';
 import moment from 'moment';
-// import { db } from './db';
-// import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { Contact } from './db/models';
 
 const getAll = async () => {
-  const [ results ] = await db.promise().query('SELECT * FROM contact');
-  return results as IContact[];
+  const contacts: IContact[] = await Contact.find();
+  return contacts;
 };
 
 const getOne = async (id: number) => {
-  const [ results ] = await db.promise().query<RowDataPacket[]>('SELECT * FROM contact WHERE id=?', [id]);
-  if (!results[0]) {
+  const contact: IContact | null = await Contact.findOne({ id });
+  if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
-  return results[0] as IContact;
+  return contact;
 }
 
 const create = async (c: INewContact) => {
   const date = moment().format('YYYY/MM/DD');
-  const results = await db.promise().query<ResultSetHeader>(`INSERT INTO contact (date, name, email, phone, subject, comment, archived) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)`, [date, c.name, c.email, c.phone, c.subject, c.comment, c.archived]);
-  return {
-    id: results[0].insertId,
-    ...c
-  }
+  const contact = new Contact({ date, ...c });
+  return await contact.save();
 }
 
-const update = async (c: Omit<IContact, 'date'>) => {
-  const [ results ] = await db.promise().query<ResultSetHeader>('UPDATE contact SET name=?, email=?, phone=?, subject=?, comment=?, archived=? WHERE id=?', 
-  [c.name, c.email, c.phone, c.subject, c.comment, c.archived, c.id])
-  if (results.affectedRows === 0) {
+const update = async (c: INewContact, id: string) => {
+  const contact = Contact.updateOne({ id }, {
+    $set: {
+      ...c
+    }
+  });
+  if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
-  return results;
+  return contact;
 }
 
 const _delete = async (id: number) => {
-  const [ results ] = await db.promise().query<ResultSetHeader>('DELETE FROM contact WHERE id=?', [id]);
-  if (results.affectedRows === 0) {
+  const contact = Contact.deleteOne({ id });
+  if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
-  return `Contact with ID ${id} deleted`;
+  return `Contact with id ${id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }

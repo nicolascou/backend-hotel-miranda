@@ -45,7 +45,7 @@ const updateUser = async (req: Request<{ id: string }, IUser, INewUser>, res: Re
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
     req.body.password = encryptPassword(req.body.password);
-    return res.send(await users.update({ id: Number(req.params.id), ...req.body }));
+    return res.send(await users.update(req.body, req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

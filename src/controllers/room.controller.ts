@@ -38,7 +38,7 @@ const updateRoom = async (req: Request<{ id: string }, IRoom, INewRoom>, res: Re
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
-    return res.send(await rooms.update({ id: Number(req.params.id), ...req.body }));
+    return res.send(await rooms.update(req.body, req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
