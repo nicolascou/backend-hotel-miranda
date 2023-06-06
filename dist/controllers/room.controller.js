@@ -12,64 +12,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBooking = exports.updateBooking = exports.createBooking = exports.getBookingById = exports.getBookings = void 0;
-const bookings_1 = __importDefault(require("../repositories/bookings"));
+exports.deleteRoom = exports.updateRoom = exports.createRoom = exports.getRoomById = exports.getRooms = void 0;
+const rooms_1 = __importDefault(require("../repositories/rooms"));
 const schemas_1 = require("../validators/schemas");
 const error_1 = require("../models/error");
-const getBookings = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getRooms = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return res.send(yield bookings_1.default.getAll());
+        return res.send(yield rooms_1.default.getAll());
     }
     catch (err) {
         return res.sendStatus(500);
     }
 });
-exports.getBookings = getBookings;
-const getBookingById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getRooms = getRooms;
+const getRoomById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        return res.send(yield bookings_1.default.getOne(Number(req.params.id)));
+        return res.send(yield rooms_1.default.getOne(Number(req.params.id)));
     }
     catch (err) {
         return res.status((_a = err.status) !== null && _a !== void 0 ? _a : 500).send(err.message);
     }
 });
-exports.getBookingById = getBookingById;
-const createBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getRoomById = getRoomById;
+const createRoom = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     try {
-        const { error } = schemas_1.bookingSchema.validate(req.body);
+        const { error } = schemas_1.roomSchema.validate(req.body);
         if (error) {
             throw new error_1.BadRequest(`Validation error: ${error.details[0].message}`, 400);
         }
-        return res.status(201).send(yield bookings_1.default.create(req.body));
+        return res.status(201).send(yield rooms_1.default.create(req.body));
     }
     catch (err) {
         return res.status((_b = err.status) !== null && _b !== void 0 ? _b : 500).send(err.message);
     }
 });
-exports.createBooking = createBooking;
-const updateBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createRoom = createRoom;
+const updateRoom = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _c;
     try {
-        const { error } = schemas_1.bookingSchema.validate(req.body);
+        const { error } = schemas_1.roomSchema.validate(req.body);
         if (error) {
             throw new error_1.BadRequest(`Validation error: ${error.details[0].message}`, 400);
         }
-        return res.send(yield bookings_1.default.update(Object.assign({ id: Number(req.params.id) }, req.body)));
+        return res.send(yield rooms_1.default.update(Object.assign({ id: Number(req.params.id) }, req.body)));
     }
     catch (err) {
         return res.status((_c = err.status) !== null && _c !== void 0 ? _c : 500).send(err.message);
     }
 });
-exports.updateBooking = updateBooking;
-const deleteBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.updateRoom = updateRoom;
+const deleteRoom = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _d;
     try {
-        return res.send(yield bookings_1.default.delete(Number(req.params.id)));
+        return res.send(yield rooms_1.default.delete(Number(req.params.id)));
     }
     catch (err) {
         return res.status((_d = err.status) !== null && _d !== void 0 ? _d : 500).send(err.message);
     }
 });
-exports.deleteBooking = deleteBooking;
+exports.deleteRoom = deleteRoom;
