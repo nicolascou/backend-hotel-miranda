@@ -38,7 +38,7 @@ const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>
     if (error) {
       throw new BadRequest(`Validation error: ${error.details[0].message}`, 400);
     }
-    return res.send(await bookings.update({ id: Number(req.params.id), ...req.body }));
+    return res.send(await bookings.update(req.body, req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

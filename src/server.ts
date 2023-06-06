@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import mongoose from "mongoose";
 
 import UserRouter from './routes/UserRoutes';
 import BookingRouter from './routes/BookingRoutes';
@@ -23,4 +24,11 @@ app.use('/rooms', passport.authenticate('jwt', { session: false }), RoomRouter);
 app.use('/contact', passport.authenticate('jwt', { session: false }), ContactRouter);
 
 export const server = app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
+
+const connextionString = `mongodb://localhost:27017`;
+
+mongoose.connect(connextionString)
+  .then(() => console.log('Connected to Database'))
+  .catch((err) => console.error(err));
+  
 export default app;

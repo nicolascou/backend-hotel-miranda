@@ -1,8 +1,8 @@
 import { IContact, INewContact } from '../models/types';
 import { BadRequest } from '../models/error';
 import moment from 'moment';
-import { db } from './db';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+// import { db } from './db';
+// import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 const getAll = async () => {
   const [ results ] = await db.promise().query('SELECT * FROM contact');

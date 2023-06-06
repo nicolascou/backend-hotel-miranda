@@ -1,5 +1,5 @@
 export interface IUser {
-  id: number;
+  _id: string;
   full_name: string;
   username: string;
   photo: string;
@@ -25,7 +25,7 @@ export interface INewUser {
 }
 
 export interface IBooking {
-  id: number;
+  _id: string;
   room_id: number;
   guest: string | undefined;
   guest_id: string;
@@ -48,7 +48,7 @@ export interface INewBooking {
 }
 
 export interface IRoom {
-  id: number;
+  _id: string;
   name: string | undefined;
   bed_type: string | undefined;
   photo: string | undefined;
@@ -71,7 +71,7 @@ export interface INewRoom {
 }
 
 export interface IContact {
-  id: number;
+  _id: string;
   date: string;
   name: string | undefined;
   email: string | undefined;

@@ -1,7 +1,7 @@
 import { IRoom, INewRoom } from '../models/types';
 import { BadRequest } from '../models/error';
-import { db } from './db';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+// import { db } from './db';
+// import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 const getAll = async () => {
   const [ results ] = await db.promise().query('SELECT * FROM rooms');
