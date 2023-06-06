@@ -22,20 +22,20 @@ const create = async (c: INewContact) => {
   return await contact.save();
 }
 
-const update = async (c: INewContact, id: string) => {
-  const contact = Contact.updateOne({ id }, {
+const update = async (c: INewContact, _id: string) => {
+  const contact = await Contact.findOneAndUpdate({ _id }, {
     $set: {
       ...c
     }
-  });
+  }, { new: true });
   if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
   return contact;
 }
 
-const _delete = async (_id: number) => {
-  const contact = Contact.findOneAndDelete({ _id });
+const _delete = async (_id: string) => {
+  const contact = await Contact.findOneAndDelete({ _id });
   if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }

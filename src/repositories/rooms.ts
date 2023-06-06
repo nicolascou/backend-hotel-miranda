@@ -7,8 +7,8 @@ const getAll = async () => {
   return rooms;
 };
 
-const getOne = async (id: string) => {
-  const room: IRoom | null = await Room.findOne({ id });
+const getOne = async (_id: string) => {
+  const room: IRoom | null = await Room.findOne({ _id });
   if (!room) {
     throw new BadRequest('No room found by provided ID', 404);
   }
@@ -20,24 +20,24 @@ const create = async (r: INewRoom) => {
   return await room.save();
 }
 
-const update = async (r: INewRoom, id: string) => {
-  const room = Room.updateOne({ id }, {
+const update = async (r: INewRoom, _id: string) => {
+  const room = await Room.findOneAndUpdate({ _id }, {
     $set: {
       ...r
     }
-  });
+  }, { new: true });
   if (!room) {
     throw new BadRequest('No room found by provided ID', 404);
   }
   return room;
 }
 
-const _delete = async (id: number) => {
-  const room = Room.deleteOne({ id });
+const _delete = async (_id: number) => {
+  const room = await Room.findOneAndDelete({ _id });
   if (!room) {
     throw new BadRequest('No room found by provided ID', 404);
   }
-  return `Room with id ${id} deleted`;
+  return `Room with id ${_id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }

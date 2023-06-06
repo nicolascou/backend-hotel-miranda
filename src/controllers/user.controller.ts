@@ -53,7 +53,7 @@ const updateUser = async (req: Request<{ id: string }, IUser, INewUser>, res: Re
 
 const deleteUser = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
-    return res.send(await users.delete(Number(req.params.id)));
+    return res.send(await users.delete(req.params.id));
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }

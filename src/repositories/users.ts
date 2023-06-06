@@ -8,8 +8,8 @@ const getAll = async () => {
   return users;
 };
 
-const getOne = async (id: string) => {
-  const user: IUser | null = await User.findOne({ id });
+const getOne = async (_id: string) => {
+  const user: IUser | null = await User.findOne({ _id });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);
   }
@@ -22,24 +22,24 @@ const create = async (u: INewUser) => {
   return await user.save();
 }
 
-const update = async (u: INewUser, id: string) => {
-  const user = User.updateOne({ id }, {
+const update = async (u: INewUser, _id: string) => {
+  const user = await User.findOneAndUpdate({ _id }, {
     $set: {
       ...u
     }
-  });
+  }, { new: true });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);
   }
   return user;
 }
 
-const _delete = async (id: number) => {
-  const user = User.deleteOne({ id });
+const _delete = async (_id: string) => {
+  const user = User.findOneAndDelete({ _id });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);
   }
-  return `User with id ${id} deleted`;
+  return `User with id ${_id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }

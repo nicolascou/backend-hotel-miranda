@@ -27,7 +27,7 @@ const update = async (b: INewBooking, _id: string) => {
     $set: {
       ...b
     }
-  });
+  }, { new: true });
   if (!booking) {
     throw new BadRequest('No booking found by provided ID', 404);
   }

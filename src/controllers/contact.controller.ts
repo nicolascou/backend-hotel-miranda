@@ -44,7 +44,7 @@ const updateContact = async (req: Request<{ id: string }, IContact, INewContact>
   }
 }
 
-const deleteContact = async (req: Request<{ id: number }, string>, res: Response) => {
+const deleteContact = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
     return res.send(await contacts.delete(req.params.id));
   } catch (err: any) {
