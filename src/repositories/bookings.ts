@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Booking } from './db/models';
 
 const getAll = async () => {
-  const bookings: IBooking[] = await Booking.find();
+  const bookings: IBooking[] = await Booking.find({});
   return bookings;
 };
 

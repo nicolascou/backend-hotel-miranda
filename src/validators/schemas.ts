@@ -5,7 +5,7 @@ export const roomJoiSchema = Joi.object({
   bed_type: Joi.string().valid('Single Bed', 'Double Bed', 'Double Luxury').required(),
   photo: Joi.string().uri(),
   description: Joi.string(),
-  amenities: Joi.array().items(Joi.string().valid('Wifi', 'LED TV', 'AC')),
+  amenities: Joi.array().items(Joi.string().valid('Wifi', 'LED TV', 'AC', 'Towels', 'Shower')),
   rate: Joi.number(),
   offer: Joi.number(),
   available: Joi.boolean()

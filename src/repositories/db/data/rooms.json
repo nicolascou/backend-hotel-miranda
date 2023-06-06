@@ -1,0 +1,73 @@
+[
+  {
+    "name": "Deluxe A-123",
+    "bed_type": "Double Bed",
+    "photo": "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
+    "amenities": [
+      "Wifi",
+      "Towels",
+      "LED TV"
+    ],
+    "description": "",
+    "rate": 244,
+    "offer": 150,
+    "available": true
+  },
+  {
+    "name": "Deluxe B-234",
+    "bed_type": "Single Bed",
+    "photo": "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+    "amenities": [
+      "Wifi",
+      "Towels",
+      "Shower"
+    ],
+    "description": "",
+    "rate": 168,
+    "offer": 99,
+    "available": false
+  },
+  {
+    "name": "Deluxe C-345",
+    "bed_type": "Double Bed",
+    "photo": "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80",
+    "amenities": [
+      "Wifi",
+      "Towels",
+      "LED TV",
+      "Shower"
+    ],
+    "description": "",
+    "rate": 305,
+    "offer": 200,
+    "available": true
+  },
+  {
+    "name": "Deluxe D-456",
+    "bed_type": "Double Luxury",
+    "photo": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+    "amenities": [
+      "Wifi",
+      "Towels",
+      "Shower"
+    ],
+    "description": "",
+    "rate": 114,
+    "offer": 70,
+    "available": true
+  },
+  {
+    "name": "Deluxe E-567",
+    "bed_type": "Double Luxury",
+    "photo": "https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
+    "amenities": [
+      "Wifi",
+      "Towels",
+      "LED TV"
+    ],
+    "description": "",
+    "rate": 563,
+    "offer": 300,
+    "available": false
+  }
+]

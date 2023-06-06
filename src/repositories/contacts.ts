@@ -8,8 +8,8 @@ const getAll = async () => {
   return contacts;
 };
 
-const getOne = async (id: number) => {
-  const contact: IContact | null = await Contact.findOne({ id });
+const getOne = async (_id: number) => {
+  const contact: IContact | null = await Contact.findOne({ _id });
   if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
@@ -34,12 +34,12 @@ const update = async (c: INewContact, id: string) => {
   return contact;
 }
 
-const _delete = async (id: number) => {
-  const contact = Contact.deleteOne({ id });
+const _delete = async (_id: number) => {
+  const contact = Contact.findOneAndDelete({ _id });
   if (!contact) {
     throw new BadRequest('No contact found by provided ID', 404);
   }
-  return `Contact with id ${id} deleted`;
+  return `Contact with id ${_id} deleted`;
 }
 
 export default { getAll, getOne, create, update, delete: _delete }
