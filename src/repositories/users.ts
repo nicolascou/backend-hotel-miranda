@@ -14,25 +14,21 @@ const getOne = async (_id: string) => {
     throw new BadRequest('No user found by provided ID', 404);
   }
   return user;
-}
+};
 
 const create = async (u: INewUser) => {
   const start_date = moment().format('YYYY-MM-DD');
   const user = new User({ start_date, ...u });
   return await user.save();
-}
+};
 
 const update = async (u: INewUser, _id: string) => {
-  const user = await User.findOneAndUpdate({ _id }, {
-    $set: {
-      ...u
-    }
-  }, { new: true });
+  const user = await User.findOneAndUpdate({ _id }, { $set: { ...u } }, { new: true });
   if (!user) {
     throw new BadRequest('No user found by provided ID', 404);
   }
   return user;
-}
+};
 
 const _delete = async (_id: string) => {
   const user = await User.findOneAndDelete({ _id });
@@ -40,6 +36,6 @@ const _delete = async (_id: string) => {
     throw new BadRequest('No user found by provided ID', 404);
   }
   return `User with id ${_id} deleted`;
-}
+};
 
-export default { getAll, getOne, create, update, delete: _delete }
+export default { getAll, getOne, create, update, delete: _delete };

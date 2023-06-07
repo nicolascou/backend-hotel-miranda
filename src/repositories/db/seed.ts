@@ -16,9 +16,9 @@ async function generateRooms() {
       amenities: ['Wifi', 'LED TV', 'AC'],
       rate: faker.number.float({ min: 200, max: 500, precision: 0.01 }),
       offer: faker.number.float({ min: 50, max: 200, precision: 0.01 }),
-      available: true
-    }
-    
+      available: true,
+    };
+
     const newRoom = new Room(o);
     newRoom.save();
   }
@@ -26,8 +26,8 @@ async function generateRooms() {
 
 async function generateBookings() {
   const rooms: IRoom[] = await Room.find({});
-  const roomIds = rooms.map(room => room._id);
-  
+  const roomIds = rooms.map((room) => room._id);
+
   for (let i = 0; i < 15; i++) {
     const o: Omit<IBooking, '_id'> = {
       room_id: roomIds[Math.floor(Math.random() * roomIds.length)],
@@ -38,9 +38,9 @@ async function generateBookings() {
       check_in: moment(faker.date.soon()).format('YYYY-MM-DD'),
       check_out: moment(faker.date.future()).format('YYYY-MM-DD'),
       room_type: faker.lorem.word(),
-      special_request: faker.lorem.sentence()
-    }
-    
+      special_request: faker.lorem.sentence(),
+    };
+
     const newBooking = new Booking(o);
     newBooking.save();
   }
@@ -55,9 +55,9 @@ async function generateContacts() {
       phone: Math.trunc(Math.random() * 1000000000).toString(),
       subject: faker.lorem.sentence(),
       comment: faker.lorem.sentences(),
-      archived: false
-    }
-    
+      archived: false,
+    };
+
     const newContact = new Contact(o);
     newContact.save();
   }
@@ -76,14 +76,14 @@ async function generateUsers() {
       username: faker.internet.userName(),
       phone: Math.trunc(Math.random() * 1000000000).toString(),
       start_date: moment().format('YYYY-MM-DD'),
-    }
-    
+    };
+
     const newUser = new User(o);
     newUser.save();
   }
 }
 
-console.log('Generating data...')
+console.log('Generating data...');
 generateRooms().then(() => {
   console.log('Rooms generated');
   generateBookings().then(() => console.log('Bookings generated'));

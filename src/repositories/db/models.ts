@@ -1,4 +1,4 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { model } from 'mongoose';
 
 const roomSchema = new mongoose.Schema({
   name: String,
@@ -8,7 +8,7 @@ const roomSchema = new mongoose.Schema({
   amenities: JSON,
   rate: Number,
   offer: Number,
-  available: Boolean
+  available: Boolean,
 });
 
 export const Room = model('Room', roomSchema);
@@ -22,7 +22,7 @@ const bookingSchema = new mongoose.Schema({
   check_in: String,
   check_out: String,
   room_type: String,
-  special_request: String
+  special_request: String,
 });
 
 export const Booking = model('Booking', bookingSchema);
@@ -34,7 +34,7 @@ const contactSchema = new mongoose.Schema({
   phone: String,
   subject: String,
   comment: String,
-  archived: Boolean
+  archived: Boolean,
 });
 
 export const Contact = model('Contact', contactSchema);

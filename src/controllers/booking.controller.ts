@@ -10,7 +10,7 @@ const getBookings = async (_: Request, res: Response) => {
   } catch (err: any) {
     return res.sendStatus(500);
   }
-}
+};
 
 const getBookingById = async (req: Request<{ id: string }, IBooking>, res: Response) => {
   try {
@@ -21,7 +21,7 @@ const getBookingById = async (req: Request<{ id: string }, IBooking>, res: Respo
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
-}
+};
 
 const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Response) => {
   try {
@@ -33,7 +33,7 @@ const createBooking = async (req: Request<{}, IBooking, INewBooking>, res: Respo
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
-}
+};
 
 const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>, res: Response) => {
   try {
@@ -48,7 +48,7 @@ const updateBooking = async (req: Request<{ id: string }, IBooking, INewBooking>
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
-}
+};
 
 const deleteBooking = async (req: Request<{ id: string }, string>, res: Response) => {
   try {
@@ -59,6 +59,6 @@ const deleteBooking = async (req: Request<{ id: string }, string>, res: Response
   } catch (err: any) {
     return res.status(err.status ?? 500).send(err.message);
   }
-}
+};
 
-export { getBookings, getBookingById, createBooking, updateBooking, deleteBooking }
+export { getBookings, getBookingById, createBooking, updateBooking, deleteBooking };

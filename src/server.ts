@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 import UserRouter from './routes/UserRoutes';
 import BookingRouter from './routes/BookingRoutes';
@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/login', loginRouter)
+app.use('/login', loginRouter);
 app.use('/users', passport.authenticate('jwt', { session: false }), UserRouter);
 app.use('/bookings', passport.authenticate('jwt', { session: false }), BookingRouter);
 app.use('/rooms', passport.authenticate('jwt', { session: false }), RoomRouter);
@@ -29,8 +29,9 @@ if (process.env.NODE_ENV !== 'test') {
 
 const connextionString = 'mongodb://localhost:27017/miranda';
 
-mongoose.connect(connextionString)
+mongoose
+  .connect(connextionString)
   .then(() => console.log('Connected to Database'))
   .catch((err: any) => console.error(err));
-  
+
 export default app;
