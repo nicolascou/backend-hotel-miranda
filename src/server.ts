@@ -31,6 +31,6 @@ const connextionString = 'mongodb://localhost:27017/miranda';
 
 mongoose.connect(connextionString)
   .then(() => console.log('Connected to Database'))
-  .catch((err) => console.error(err));
+  .catch((err: any) => console.error(err));
   
 export default app;
