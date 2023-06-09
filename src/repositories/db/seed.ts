@@ -3,8 +3,9 @@ import { faker } from '@faker-js/faker';
 import moment from 'moment';
 import { Contact, Booking, Room, User } from './models';
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
-mongoose.connect('mongodb://localhost:27017/miranda');
+mongoose.connect(String(process.env.CLUSTER_URI));
 
 async function generateRooms() {
   for (let i = 0; i < 15; i++) {

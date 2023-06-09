@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT, () => console.log(`Running on port ${process.env.PORT}`));
 }
 
-const connextionString = 'mongodb://localhost:27017/miranda';
+const connextionString = process.env.CLUSTER_URI || '';
 
 mongoose
   .connect(connextionString)
