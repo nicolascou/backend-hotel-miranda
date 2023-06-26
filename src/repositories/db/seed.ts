@@ -51,11 +51,11 @@ async function generateContacts() {
   for (let i = 0; i < 15; i++) {
     const o: Omit<IContact, '_id'> = {
       date: moment().format('YYYY-MM-DD'),
-      name: faker.string.uuid(),
+      name: faker.person.fullName(),
       email: faker.internet.email(),
       phone: Math.trunc(Math.random() * 1000000000).toString(),
       subject: faker.lorem.sentence(),
-      comment: faker.lorem.sentences(),
+      comment: faker.lorem.sentences(3),
       archived: false,
     };
 
